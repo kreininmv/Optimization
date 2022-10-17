@@ -1,0 +1,201 @@
+\section{Matrix calculus}
+
+\subsection{Problem № 1} Find the gradient $\nabla f(x)$ and hessian $f^{''}(x)$, if $f(x) = \frac{1}{2} \|Ax-b \|^2_2$
+
+\underline{\textbf{Solution:}}
+
+\begin{equation*}
+    f(x) = \frac{1}{2} \langle Ax-b, Ax-b \rangle = \frac{1}{2} \langle Adx, Ax-b \rangle + \frac{1}{2} \langle Ax-b, Adx \rangle 
+\end{equation*}
+
+\begin{equation*}
+    f(x) = \frac{1}{2} \langle Ax - b, Adx \rangle +
+    \frac{1}{2} \langle Ax - b, Adx \rangle = 
+    \langle Ax-b, Adx \rangle = \langle A^T(Ax-b), dx \rangle
+\end{equation*}
+
+\begin{equation*}
+    \nabla f(x) = A^T(Ax-b)
+\end{equation*}
+
+\begin{equation*}
+    df(x) = \langle A^T(Ax-b), dx \rangle
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = \langle d(A^T(Ax_2-b), dx_1 \rangle = \langle
+    A^TAdx_2, dx_1 \rangle = \langle dx_1, A^TAdx_2 \rangle
+\end{equation*}
+
+\begin{equation*}
+d^2f(x) = \langle A^TAdx_1, dx_2 \rangle
+\end{equation*}
+
+\underline{\textbf{Answer:}} $\nabla f(x) = A^T(Ax-b)$, $f^{''}(x) = A^TA$
+
+
+\subsection{Problem № 2} Find gradient and hessian of $f: \mathds{R}^n \rightarrow \mathds{R}$, if:
+
+$f(x) = \log \left( \sum\limits_{i=1}^m exp(a^T_ix + b_i) \right), a_1, ..., am \in \mathds{R}^n; b_1, ..., b_m \in \mathds{R}$
+
+\underline{\textbf{Solution:}}
+
+\begin{equation*}
+    df(x) = \frac{d \left(  \sum\limits_{i=1}^m exp(a^T_ix + b_i) \right)}{\sum\limits_{i=1}^m exp(a^T_ix + b_i)} = \frac{\sum\limits_{i=1}^m exp(a^T_ix + b_i)a^T_idx}{  \sum\limits_{i=1}^m exp(a^T_ix + b_i)} = \frac{\langle\sum\limits_{i=1}^m exp(a^T_ix + b_i)a^T_i, dx \rangle}{\sum\limits_{i=1}^m exp(a^T_ix + b_i)}
+\end{equation*}
+
+\begin{equation*}
+    \nabla f(x) = \frac{\sum\limits_{i=1}^m exp(a^T_ix + b_i)a^T_i}{\sum\limits_{i=1}^m exp(a^T_ix + b_i)}
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = \langle d\left( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a_i}{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)} \right), dx_1 \rangle
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = \langle \left( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a_ia^T_i}{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)} + ( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a_ia^T_i}{\left( \sum\limits_{i=1}^m exp(a^T_ix_2 + b_i) \right)^2} \right) dx_2, dx_1 \rangle
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = \langle dx_1, \left( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a_ia^T_i}{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)} + ( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a_ia^T_i}{\left( \sum\limits_{i=1}^m exp(a^T_ix_2 + b_i) \right)^2} \right) dx_2 \rangle
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = \langle \left( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a^T_ia_i}{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)} + ( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a^T_ia_i}{\left( \sum\limits_{i=1}^m exp(a^T_ix_2 + b_i) \right)^2} \right)dx_1, dx_2 \rangle
+\end{equation*}
+
+\underline{\textbf{Answer:}} $ \nabla f(x) = \frac{\sum\limits_{i=1}^m exp(a^T_ix + b_i)a^T_i}{\sum\limits_{i=1}^m exp(a^T_ix + b_i)}$;
+$f^{''}(x) = \left( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a^T_ia_i}{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)} + ( \frac{\sum\limits_{i=1}^m exp(a^T_ix_2 + b_i)a^T_ia_i}{\left( \sum\limits_{i=1}^m exp(a^T_ix_2 + b_i) \right)^2} \right)$
+
+
+\subsection{Problem № 3} Calculate the derivatives of the loss function with respect to parameters $\frac{\partial L}{\partial W}, \frac{\partial L}{\partial b}$ for the single object $x_i (or, n = 1)$
+
+\underline{\textbf{Solution:}}
+\begin{equation*}
+    L = \frac{1}{n} \sum\limits_{i=1}^n \|y_i - \tilde y \|^2 = \frac{1}{n} \sum\limits_{i=1}^n \langle y_i - \tilde y, y_i - \tilde y \rangle = \frac{1}{n} \sum\limits_{i=1}^n \langle y_i - Wx_i - b, y_i - Wx_i - b \rangle
+\end{equation*}
+
+\begin{equation*}
+dL(dW) = \frac{1}{n} \sum\limits_{i=1}^n \langle y_i - Wx_i - b, -dWx_i, \rangle + \langle y_i - Wx_i - b, -dWx_i \rangle    
+\end{equation*}
+
+\begin{equation*}
+dL(dW) = \frac{2}{n} \sum\limits_{i=1}^n \langle -dWx_i, y_i - Wx_i - b \rangle = -\frac{2}{n} \sum\limits_{i=1}^n \langle (y_i - Wx_i - b)x_i^T, dW \rangle 
+\end{equation*}
+
+\begin{equation*}
+    dL(db) = \frac{1}{n} \sum\limits_{i=1}^n \langle -db, y_i - Wx_i - b \rangle + \langle y_i - Wx_i - b, -db \rangle = -\frac{2}{n} \sum\limits_{i=1}^n \langle y_i - Wx_i - b, db\rangle
+\end{equation*}
+
+\underline{\textbf{Answer:}} $\frac{\partial L}{\partial W} = -\frac{2}{n} \sum\limits_{i=1}^n  (y_i - Wx_i - b)x_i^T$; $ \frac{\partial L}{\partial b} = -\frac{2}{n} \sum\limits_{i=1}^n y_i - Wx_i - b $
+
+
+\subsection{Problem № 4} 
+Calculate: 
+\begin{equation*}
+\frac{\partial}{\partial X} \sum \text{eig(X)}, \frac{\partial}{\partial X} \prod \text{eig(X)}, \frac{\partial}{\partial X} tr(X), \frac{\partial}{\partial X} \text{det(X)}
+\end{equation*}
+
+\underline{\textbf{Solution:}}
+\begin{equation*}
+    \frac{\partial}{\partial X} \sum \text{eig(X)} = \frac{\partial}{\partial X} tr(X)
+\end{equation*}
+
+\begin{equation*}
+    d(tr(X)) = tr(dX) = tr(I^T, dX) = \langle I, dX \rangle
+\end{equation*}
+
+\begin{equation*}
+    \frac{\partial}{\partial X} \prod \text{eig(X)} = \frac{\partial}{\partial X} \text{det(X)}
+\end{equation*}
+
+\begin{equation*}
+    det(X) = \sum\limits_{i=1}^n x_{ij}M_{ij}; \frac{\partial X}{\partial x_{ij}} = \frac{ \partial \sum\limits_{i=1}^n x_{ij}M_{ij}}{\partial x_{ij}} = M_{ij}
+\end{equation*}
+
+Т.к. $x_{ij}^{-1} = \frac{M_{ji}}{detX}$, тогда
+\begin{equation*}
+    \frac{\partial (det(X))}{\partial X} = det(X)X^{-T}
+\end{equation*}
+
+\underline{\textbf{Answer:}}
+ $\frac{\partial}{\partial X} \sum \text{eig(X)} = \frac{\partial}{\partial X} tr(X) = I$; 
+ $\frac{\partial}{\partial X} \prod \text{eig(X)} = \frac{\partial}{\partial X} \text{det(X)} = det(X)X^{-T}$
+ 
+ 
+\subsection{Problem № 5}
+Calculate the first and the second derivative of the following function: $f : S \rightarrow \mathds{R}$
+
+$f(t) = det(A-tI_n)$, where $A \in \mathds{R}^{n \dot n}, S := \{ t \in \mathds{R} : det(A-tI_n) \not = 0 \}$
+
+\underline{\textbf{Solution:}}
+
+\begin{equation*}
+    df(t) = det(A-t\cdot I) \langle (A - t \cdot I)^{-T}, -Idt \rangle = -det(A-t\cdot I) \langle (A - t \cdot I)^{-T}, -Idt \rangle
+\end{equation*}
+
+\begin{equation*}
+    df(t) = -f(t) \cdot tr \left( (A-t \cdot I)^{-1} \right) dt
+\end{equation*}
+
+Okay, let's try to calculate second derivative of that nice function!
+\begin{equation*}
+    d^2f(t) = -d\left(f(t) \cdot tr \left( (A-t \cdot I)^{-1} \right) dt_1 \right)
+\end{equation*}
+
+\begin{equation*}
+    d^2f(t) = -\nabla f(t) \cdot tr \left( (A-t \cdot I)^{-1} \right)dt_2\cdot dt_1 -
+    f(t) \langle I, -(A-t \cdot I)^{-1}(-Idt_2)(A-t \cdot I)^{-1} \rangle dt_1
+\end{equation*}
+
+And then we get:
+\begin{equation*}
+    d^2f(t) = -\left( \nabla f(t) \cdot tr\left((A-t \cdot I)^{-1}\right) + f(t)\cdot tr\left( ((A-t\cdot I)^{-2})^T\right) \right) \cdot dt_1 \cdot dt_2
+\end{equation*}
+
+\underline{\textbf{Answer:}}
+$\nabla f(t) = -f(t) \cdot tr \left( (A-t \cdot I)^{-1} \right)$
+
+$f^{''}(t) = -\left( \nabla f(t) \cdot tr\left((A-t \cdot I)^{-1}\right) + f(t)\cdot tr\left( ((A-t\cdot I)^{-2})^T\right) \right)$
+ 
+\subsection{Problem № 6}
+Find the gradient $\nabla f(x)$, if $f(x) = tr(AX^2BX^{-T})$.
+
+\underline{\textbf{Solution:}}
+
+\begin{equation*}
+    df(X) = d(tr(AX^2BX^{-T}) = \langle I, d(AX^2BX^{-T}) \rangle
+\end{equation*}
+
+\begin{equation*}
+  df(X) = \langle I, A(XdX + dXX)BX^{-T} - AX^2BX^{-T}dX^TX^{-T} \rangle 
+\end{equation*}
+
+\begin{equation*}
+    df(X) = \langle (BX^{-T}AX)^T, dX \rangle + \langle (XBX^{-T}A)^T, dX \rangle  + \langle (X^{-T}AX^2BX^{-T})^T, dX^T \rangle
+\end{equation*}
+
+
+\begin{equation*}
+    df(X) = \langle X^TA^TX^{-1}B^T, dX \rangle + \langle A^TX^{-1}B^TX^T, dX \rangle - \langle
+    X^{-1}B^TX^TX^TA^TX^{-1}, dX^T \rangle
+\end{equation*}
+
+\begin{equation*}
+    df(X) = \langle 2X^TA^TX^{-1}B^T, dX \rangle - \langle
+     X^{-1}B^TX^TX^TA^TX^{-1}, dX^T \rangle
+\end{equation*}
+
+\begin{equation*}
+    df(X) = \langle X^TA^TX^{-1}B^T + A^TX^{-1}B^TX^T, dX \rangle - \langle
+     (X^{-1}B^TX^TX^TA^TX^{-1})^T, dX \rangle
+\end{equation*}
+
+\begin{equation*}
+    df(X) = \langle X^TA^TX^{-1}B^T + A^TX^{-1}B^TX^T -
+     X^{-T}AXXBX^{-T}, dX \rangle
+\end{equation*}
+
+\underline{\textbf{Answer:}} $\nabla f(x) = X^TA^TX^{-1}B^T + A^TX^{-1}B^TX^T - X^{-T}AXXBX^{-T}$
+
+

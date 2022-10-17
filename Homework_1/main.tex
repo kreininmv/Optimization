@@ -1,0 +1,90 @@
+\documentclass[a4paper,14pt]{article}
+
+\usepackage{extsizes} % Возможность сделать 14-й шрифт
+
+% Пакеты
+\usepackage[warn]{mathtext}
+\usepackage[utf8]{inputenc} 		% Кодировка исходного текста
+\usepackage[english,russian]{babel} % Локализация и переносы
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{wasysym}
+\usepackage{float}					% "Плавающие" картинки
+\usepackage{wrapfig}				% Обтекание фигур (таблиц, картинок)
+\usepackage{lscape}
+\usepackage{xcolor}
+\usepackage{fancyhdr} 				% Загрузим пакет
+\usepackage{dsfont}					% Для стрелочек и других матсимволов
+\usepackage{multicol}				% Для "столбиков"
+\usepackage[normalem]{ulem}
+\usepackage{pdfpages}
+\usepackage{graphicx}				% Вставка картинок правильная
+\graphicspath{{pictures/}, {images/}, {}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+%Задаем ссылки
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=red,
+filecolor=magenta,
+urlcolor=blue
+}
+
+% Задаем поля
+\usepackage{geometry} 
+\geometry{top=25mm}
+\geometry{bottom=20mm}
+\geometry{left=15mm}
+\geometry{right=15mm}
+\usepackage{extsizes}                   % Возможность сделать 14-й шрифт
+
+\setcounter{section}{0}
+
+%%%Библиотеки
+%\usepackage{indentfirst}
+
+
+%%% DRAGON STUFF
+\usepackage{scalerel}
+
+\DeclareMathOperator*{\myint}{\ThisStyle{\rotatebox{25}{$\SavedStyle\!\int\!\!\!$}}}
+
+\DeclareMathOperator*{\myoint}{\ThisStyle{\rotatebox{25}{$\SavedStyle\!\oint\!\!\!$}}}
+%%% END 
+
+%%%Конец библиотек
+
+%%%Настройка ссылок
+\hypersetup
+{
+colorlinks=true,
+linkcolor=blue,
+filecolor=magenta,
+urlcolor=blue
+}
+%%%Конец настройки ссылок
+
+
+%%%Настройка колонтитулы
+\pagestyle{fancy}
+
+\fancyhead[L]{Homework}
+\fancyhead[C]{Optimization}
+\fancyhead[R]{\includegraphics[scale=0.14]{rus_mipt_logo.png}}
+
+\fancyfoot[L]{\includegraphics[scale=0.025]{fupm.jpg}}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{Kreinin Matvei, B05-003}
+%%%конец настройки колонтитулы
+
+\begin{document}
+ \include{title}
+ \tableofcontents
+ 
+ \include{task_02}
+ \include{task_03}
+ \include{task_04}
+ \include{task_08}
+\end{document}
