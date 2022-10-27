@@ -1,0 +1,68 @@
+\section{Conjugate sets}
+%\subsection{Problem №1}
+%Find the sets $\mathds{S}^*, \mathds{S}^{**}, \mathds{S}^{***}$, if
+
+%\begin{equation*}
+%    \mathds{S} = \{ x \in \mathds{R}^2 \text{ | } x_1 + x_2 \geq -1, \text{ } 2x_1 - x_2 \geq 0, \text{ } -x_1+2x_2\leq -2\}
+%\end{equation*}
+
+%\underline{\textbf{Solution:}}
+
+%\underline{\textbf{Answer:}}
+
+\subsection{Problem №4}
+Find the conjugate set to the ellipsoid:
+\begin{equation*}
+    S = \left\{ x \in \mathds{R}^n | \sum\limits_{i=1}^n a_i^2x_i^2 \leq \varepsilon^2 \right\}
+\end{equation*}
+
+\underline{\textbf{Solution:}}
+It's equivalent to:
+\begin{equation*}
+    S = \left\{ x \in \mathds{R}^n | \sum\limits_{i=1}^n a_i^2x_i^2 \leq \varepsilon^2 \right\}
+\end{equation*}
+$A = diag(\frac{a_i}{\varepsilon})$
+\begin{equation*}
+    ||Ax||_2^2 = \sum\limits_{i=1}^n (\frac{a_i}{\varepsilon})^2x_i^2
+\end{equation*}
+
+From Boyd's optimization I know that:
+\begin{equation*}
+S = \{ x \in \mathds{R}^n | ||Ax||_2 \leq 1 \} = E = \{ A^{-1}u | ||u||_2 \leq 1\}    
+\end{equation*}
+$A^{-1} = diag(\frac{\epsilon}{a_i})$. 
+
+Let's show that it's true.
+\newline
+1. $E \subseteq S$: $x = A^{-1}u$, $||u||_2 \leq 1$ в S: $||AA^{-1}u||_2 \leq 1$, therefore $E \subseteq S$ it's true.
+\newline
+2. $S \subseteq E$: $||Ax||_2 \leq 1$, $z = Ax$, $||z||_2 \leq 1$, $x = A^{-1}z$, $||z||_2 \leq 1$, therefore $x\ \in E$, $\hookrightarrow S \subseteq E$
+
+We prove that it's true. 
+
+We need find all $p \in E^* : \forall x \in E$, $\langle p, x \rangle \geq -1$, $\forall x = A^{-1}u$, $||u||_2 \leq 1$, 
+\begin{equation*}
+\langle p, A^{-1}u \rangle = \langle A^{-T}p, u \rangle \geq -1    
+\end{equation*}
+
+From cauchy-bunyakovsky and $||u||_2 \leq 1$ we get:
+\begin{equation*}
+    |\langle A^{-T}p, u \rangle|\leq ||u||_2 \cdot ||A^{-T}p||_2 \leq ||A^{-T}p||_2 
+\end{equation*}
+
+We are suitable for all p, for which is true: $\langle A^{-T}p, u \rangle = - ||A^{-T}p||_2$,
+$-||A^{-T}p||_2 \geq -1$, we get:
+\begin{equation*}
+    ||A^{-T}p||_2 \leq 1
+\end{equation*}
+This sets an ellips with matrix $A^{-T} = diag(\frac{\varepsilon}{a_i})$.
+
+\begin{equation*}
+    S^* = E^* = \left\{ x \in \mathds{R}^n | \sum\limits_{i=1}^n (\frac{\varepsilon}{a_i})^2 x_i^2 \leq 1 \right\}
+\end{equation*}
+
+\underline{\textbf{Answer:}}
+
+\begin{equation*}
+    S^* = \left\{ x \in \mathds{R}^n | \sum\limits_{i=1}^n (\frac{1}{a_i})^2 x_i^2 \leq \frac{1}{\varepsilon^2} \right\}
+\end{equation*}
