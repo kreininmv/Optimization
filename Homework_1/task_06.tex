@@ -18,7 +18,7 @@ And we can easy get a answer:
  \end{cases}$
 
 \subsection{Problem №2}
-Find $f^*(y), if f(x) = \frac{1}{2}x^TAx$, $A \in \mathbf{S}_{++}^n$
+Find $f^*(y)$, if $f(x) = \frac{1}{2}x^TAx$, $A \in \mathbf{S}_{++}^n$
 
 \underline{\textbf{Solution:}}
 
@@ -30,13 +30,13 @@ Find $f^*(y), if f(x) = \frac{1}{2}x^TAx$, $A \in \mathbf{S}_{++}^n$
 $g(x) = y^Tx - \frac{1}{2}x^TAx$
 
 $\nabla g(x) = y - Ax$, because $A \in \mathbf{S}_{++}^n$, $\nabla g(x) = 0 \hookrightarrow$
-$y = Ax$
+$y = Ax$, $x = A^{-1}y$
 
 \begin{equation*}
-    f^*(y) = \sup_{x \in \mathbf{R}^n}\left( (Ax)^Tx - \frac{1}{2}x^TAX\right) = \sup_{x \in \mathbf{R}^n}\left( \frac{1}{2}x^TAX\right) = + \infty
+    f^*(y) = y^TA^{-1}y - \frac{1}{2}(y^TA^{-1}AA^{-1}y = \frac{1}{2}y^TA^{-1}y
 \end{equation*}
 
-\underline{\textbf{Answer:}} $f^*(y) = +\infty$
+\underline{\textbf{Answer:}} $f^*(y) = \frac{1}{2}y^TA^{-1}y$
 
 \subsection{Problem №3}
 Find $f^*(y), if f(x) = log \left( \sum\limits_{i=1}^n e^{x_i}\right)$
@@ -58,16 +58,16 @@ And we get that: $y = \frac{e^x}{\sum\limits_{i=1}^n e^{x_i}}$
 \end{equation*}
 
 \begin{equation*}
-    f^*(y) = \sum\limits_{i=1}^n log \left( \frac{e^{y_i}e^{x_i}}{\sum\limits_{k=1}^n e^{x_k}} \right) = \sum\limits_{i=1}^n log \left( e^{y_i}y_i \right) = \sum\limits_{i=1}^n y_i log(y_i) 
+    f^*(y) = \sup_{x \in \mathbf{R}^n} \left( \sum\limits_{i=1}^n log \left( \frac{e^{y_i}e^{x_i}}{\sum\limits_{k=1}^n e^{x_k}} \right) \right) = \sum\limits_{i=1}^n log \left( e^{y_i}y_i \right) = \sum\limits_{i=1}^n y_i log(y_i) 
 \end{equation*}
 
 Oh wow, it's crossentropyloss ( $y \succ 0$, $y^T\mathds{1} = 1$, so y - probability vector)
 
 Now we need to find dom $f^*$. 
 \begin{enumerate}
-    \item if $\exists y_i$ : $y_i < 0$, let's take $x_j = -\alpha$, and $x_l$ for all l : $l \not = j$, then:
+    \item if $\exists y_i$ : $y_i < 0$, let's take $x_j = -\alpha$, and $x_l = 0$ for all l : $l \not = j$, then:
     \begin{equation*}
-    y^tx - f(x) = \alpha - log \alpha \xrightarrow{\alpha \xrightarrow{} +\infty} +\infty    
+    y^Tx - f(x) = \alpha - log \alpha \xrightarrow{\alpha \xrightarrow{} +\infty} +\infty    
     \end{equation*}
 
     \item if $y \succ 0$, but $y^T \mathds{1} \not = 1$, let's take $x = \alpha \cdot \mathds{1}$
@@ -77,13 +77,13 @@ Now we need to find dom $f^*$.
     
     if $y^T \mathds{1} > 1$, then we take $\alpha \xrightarrow{} +\infty$ and get that $f^*(y) = +\infty$
 
-    if $y^T\mathds{1} < 1$, then we take $\alpha \xrightarrow{} -\infty$ and get that $f^*(y) = -\infty$
+    if $y^T\mathds{1} < 1$, then we take $\alpha \xrightarrow{} -\infty$ and get that $f^*(y) = +\infty$
 \end{enumerate}
 
 \underline{\textbf{Answer:}}
 \begin{equation*}
 f^*(y) = \begin{cases}
-    \sum\limits_{i = 1}^n y_i \cdot log(y_i), \text{if } \succ 0 \text{ and } y^T\mathds{1} = 1 \\
+    \sum\limits_{i = 1}^n y_i \cdot log(y_i), \text{if } y \succ 0 \text{ and } y^T\mathds{1} = 1 \\
     +\infty, otherwise
 \end{cases}    
 \end{equation*}
@@ -151,5 +151,5 @@ And we get: $Y = - X^{-T}$, $X = -Y^{-T}$
 \underline{\textbf{Answer:}}
 
 \begin{equation*}
-    f^*(Y) = -n + log(det(-Y^-1)), \text{ where } Y \in -\mathds{S}_{++}^n
+    f^*(Y) = -n + log(det(-Y^{-1})), \text{ where } Y \in -\mathds{S}_{++}^n
 \end{equation*}

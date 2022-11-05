@@ -36,7 +36,7 @@ d^2f(x) = \langle A^TAdx_1, dx_2 \rangle
 
 \subsection{Problem № 2} Find gradient and hessian of $f: \mathds{R}^n \rightarrow \mathds{R}$, if:
 
-$f(x) = \log \left( \sum\limits_{i=1}^m exp(a^T_ix + b_i) \right), a_1, ..., am \in \mathds{R}^n; b_1, ..., b_m \in \mathds{R}$
+$f(x) = \log \left( \sum\limits_{i=1}^m exp(a^T_ix + b_i) \right), a_1, ..., a_m \in \mathds{R}^n; b_1, ..., b_m \in \mathds{R}$
 
 \underline{\textbf{Solution:}}
 
@@ -113,7 +113,7 @@ Calculate:
     det(X) = \sum\limits_{i=1}^n x_{ij}M_{ij}; \frac{\partial X}{\partial x_{ij}} = \frac{ \partial \sum\limits_{i=1}^n x_{ij}M_{ij}}{\partial x_{ij}} = M_{ij}
 \end{equation*}
 
-Т.к. $x_{ij}^{-1} = \frac{M_{ji}}{detX}$, тогда
+Because $x_{ij}^{-1} = \frac{M_{ji}}{detX}$, then
 \begin{equation*}
     \frac{\partial (det(X))}{\partial X} = det(X)X^{-T}
 \end{equation*}

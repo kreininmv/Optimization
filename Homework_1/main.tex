@@ -5,7 +5,7 @@
 % Пакеты
 \usepackage[warn]{mathtext}
 \usepackage[utf8]{inputenc} 		% Кодировка исходного текста
-\usepackage[english,russian]{babel} % Локализация и переносы
+\usepackage[english]{babel} % Локализация и переносы
 \usepackage{caption}
 \usepackage{listings}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
@@ -22,6 +22,7 @@
 \usepackage{graphicx}				% Вставка картинок правильная
 \graphicspath{{pictures/}, {images/}, {}}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\usepackage{pdfpages}
 
 %Задаем ссылки
 \usepackage{hyperref}
@@ -80,12 +81,10 @@ urlcolor=blue
 
 \begin{document}
  \include{title}
- \Large \textbf{I need to do: 2.3, 3.2, 3.5(B), 4.7, 5.1, 5.2, 5.3, 5.5}
- \newline \textbf{It's only 8 problems...}
+ %\Large \textbf{I need to do:  3.2, 3.5(B)}\newline \textbf{It's only 1.5 problems...}
  \normalsize
  
  \tableofcontents
- 
  
  \include{task_01}
  \include{task_02}
@@ -94,4 +93,5 @@ urlcolor=blue
  \include{task_05}
  \include{task_06}
  \include{task_07}
+ \include{references}
 \end{document}
