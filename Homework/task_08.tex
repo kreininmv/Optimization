@@ -1,0 +1,363 @@
+\section{General optimization problem}
+\subsection{Problem №1}
+Consider the problem of projection some point $y \in \mathds{R}^n, y \not \in \Delta^n$ onto the unit simplex $\Delta^n$. Find 2 ways to solve the problem numerically and compare them in terms of the total computational time, memory requirements and iteration number for $n = 10, 100, 1000$
+\begin{equation*}
+    ||x-y||_2^2  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } \mathds{1}^Tx = 1, x \succeq 0
+\end{equation*}
+
+\underline{\textbf{Solution:}} there is no solution.
+
+\subsection{Problem №2}
+Give an explicit solution of the following LP.
+\begin{equation*}
+    c^T x  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } Ax = b
+\end{equation*}
+
+\underline{\textbf{Solution:}}
+
+Secondly, we can write: $L(x, \lambda) = c^Tx + \lambda(Ax-b)$, then 
+\begin{equation*}
+    \begin{cases}
+    \nabla_x L = c + A^T\lambda = 0 \\
+    \nabla_{\lambda} L = Ax - b =0    
+    \end{cases}
+\end{equation*}
+
+
+It's convex optimization problem all functions are affine. 
+
+\begin{enumerate}
+    \item Firstly, if there is no solution for $Ax = b$, then budget set is empty and $p^* = +\infty$.
+    \item Secondly, if there is solution for $Ax = b$, then $x^* = A^{\dag}b$ and $p^* = c^TA^{\dag}b$
+\end{enumerate}
+
+\underline{\textbf{Answer:}}
+\begin{equation*}
+    \begin{cases}
+    c^TA^{\dag}b \text{, if there is no solution for } Ax = b \\
+    + \infty \text{, otherwise} \\
+    \end{cases}
+\end{equation*}
+
+
+\subsection{Problem №3}
+Give an explicit solution of the following LP.
+
+\begin{equation*}
+    c^T x  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } \mathds{1}^Tx = 1, x \succeq 0
+\end{equation*}
+This problem can be considered as a simplest portfolio optimization problem.
+
+\underline{\textbf{Solution:}}
+Okay, let's sort our vector c like that: $c_1 <= c_2 <= ... <= c_n$. It's clear that $c_1 \cdot (\mathds{1}^Tx) <= c^tx$, for all x which satisfy for conditions. 
+
+And we easily get: $p^* = c_1$. It's funny that we need to invest all our money in only one asset, but it's clearlry true if we know and sure in all outcomes.
+
+\underline{\textbf{Answer:}} $p^* = c_1$. If there some components of like: $c_1 = c_2 = ... = c_l$ we take, we can take x as $x = (\frac{1}{l}, ..., \frac{1}{l}, 0, ..., 0)$, for $c_i = 0$, $i \in \overline{l+1, n}$
+
+\subsection{Problem №4}
+Give an explicit solution of the following LP.
+
+\begin{equation*}
+    c^T x  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } \mathds{1}^Tx = \alpha, 0 \preccurlyeq x \preccurlyeq 1
+\end{equation*}
+where $\alpha$ is an integer between 0 and n. What happens if $\alpha$ is not an integer (but satisfies $0 \leq 0 \alpha \leq n)$? What if we change the equality to an inequality $\mathds{1}^Tx \leq \alpha$?
+
+\underline{\textbf{Solution:}}
+If $\alpha$ is integer, then like in previous task we consider that c is like: $c_1 \leq c_2 \leq ... \leq c_n$. If this is not the case, then sort it.
+We take first $\alpha$ components of c: $c_1, ..., c_{\alpha}$ and $x_i = 1$, $i \in \overline{1, \alpha}$, $x_k = 0$, $k \in \overline{\alpha + 1, n}$. $p^* = \sum\limits_{i=1}^\alpha c_i$.
+
+If $\alpha$ is not integer, then we take like first $\lfloor \alpha \rfloor$ elements and difference between $\alpha$ and $\lfloor \alpha \rfloor$. 
+
+$x_i = 1$, $i \in \overline{1, \lfloor \alpha \rfloor}$, $x_{\lfloor \alpha \rfloor + 1} = \alpha - \lfloor \alpha \rfloor$, $x_{k}$, $k \in \overline{\lfloor \alpha \rfloor + 2, n}$. $p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor}c_i + (\alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor + 1}$.
+
+If $\mathds{1}^Tx \leq \alpha$, then we can take first $k \leq \alpha$ elements in c such that $c_i < 0$, $i \in \overline{1, k}$, $0 \leq c_{k+1}$. And $p^* = \sum\limits_{i=1}^kc_i$
+
+\underline{\textbf{Answer:}} $x^*$ are described above.
+\begin{equation*}
+    \begin{cases}
+    p^* = \sum\limits_{i=1}^\alpha c_i, \alpha \text{ is integer} \\
+    p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor}c_i + (\alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor + 1}, \alpha \text{ is not integer}  \\
+    p^* = \sum\limits_{i=1}^kc_i \text{ ,} \mathds{1}^T x \leq \alpha \text{, the conditions for k are given above}
+    \end{cases}
+\end{equation*}
+
+\subsection{Problem №5}
+Give an explicit solution of the following QP.
+
+\begin{equation*}
+    c^T x  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } x^TAx \leq 1
+\end{equation*}
+
+where $A \in \mathds{S}_{++}^n, c \not = 0$. What is the solution if the problem is not convex ($A \not \in \mathds{S}_{++}^n)$. (Hint: consider eigendecomposition of the matrix: $A = Q diag(\lambda)Q^T = \sum\limits_{i=1}^n \lambda_i q_i q_i^T$ and different cases of $\lambda > 0, \lambda = 0, \lambda < 0)$?
+
+\underline{\textbf{Solution:}}
+Okay, from course of linear algebra we can represent $A = A^{\frac{1}{2}}A^{\frac{1}{2}}$ (it's simple fact from first homework), then we take $y = A^{\frac{1}{2}}x$, then we can rewrite our problem as:
+
+\begin{equation*}
+    c^TA^{-\frac{1}{2}}y  \xrightarrow{} \min\limits_{y \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } y^Ty \leq 1
+\end{equation*}
+
+Oh, wow, we need to minimize our linear function on unit ball..., then:
+\begin{equation*}
+y^* = - \frac{A^{-\frac{1}{2}}c}{||A^{-\frac{1}{2}}c||_2}\text{, } x^* = - \frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}
+\end{equation*}
+Then optimal value will be:
+\begin{equation*}
+    p^* = -\frac{c^TA^{-\frac{1}{2}}A^{-\frac{1}{2}}c}{||A^{-\frac{1}{2}}c||_2} = - \sqrt{c^TA^{-1}c}
+\end{equation*}
+
+If $A \not \in \mathds{S}_{++}^n$.
+We represent $A = Q diag(\lambda)Q^T = \sum\limits_{i=1}^n \lambda_i q_i q_i^T$.
+We will take: $x = Q^{-T}y$, then we will rewrite our problem.
+
+\begin{equation*}
+    (Q^Tc)^Ty   \xrightarrow{} \min\limits_{y \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } \sum\limits_{i=1}^n y_i^2 \lambda_i \leq 1
+\end{equation*}
+
+If $\lambda_k > 0$, $i \in \overline{1, n}$, then it's the same task.
+
+If $\lambda_k < 0$, then we can take $y_k \xrightarrow{} \pm \infty$, and minimum will be $-\infty$.
+
+If $\lambda_k = 0$, and $(Q^Tc)_k \not = 0$, then minimum will be $-\infty$.
+
+If $\lambda_k = 0$, if $b_k = 0$ for all k such $\lambda_k = 0$, then it's the same task, but with less $\lambda_l > 0$.
+
+\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c}$, $x^* = - \frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}$
+
+\subsection{Problem №6}
+Give an explicit solution of the following QP.
+
+\begin{equation*}
+    c^T x  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } (x-x_c)^TA(x-x_c) \leq 1
+\end{equation*}
+where $A \in \mathds{S}_{++}^n, c \not = 0, x_c$
+
+\underline{\textbf{Solution:}}
+We will take $y = (x-x_c)$, and write answer, because we solved problem №5.
+
+\begin{equation*}
+y^* = -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}\text{, } x^* = x_c -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}
+\end{equation*}
+
+\begin{equation*}
+    p^* = - \sqrt{c^TA^{-1}c} + c^Tx_c
+\end{equation*} 
+
+\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c} + c^Tx_c$, $x^* = x_c -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}$
+
+\subsection{Problem №7}
+Give an explicit solution of the following QP.
+
+\begin{equation*}
+    x^TBx  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } x^TAx \leq 1
+\end{equation*}
+where $A \in \mathds{S}_{++}^n, B \in \mathds{S}_+^n$
+
+\underline{\textbf{Solution:}}
+We know that $B \in \mathds{S}_+^n$, and from that $0 \leq x^TBx$ for any $x \in \mathds{R}^n$, and minimum will be when $x^* = 0$, let's show that $x^*$ is feasible for our conditions $(x^*)^TAx^* = 0 \leq 1$. 
+Wohoo!
+
+\underline{\textbf{Answer:}} $p^* = 0$, $x^* = 0$.
+
+\subsection{Problem №8}
+Consider the equality constrained least-squares problem 
+
+\begin{equation*}
+    ||Ax-b||_2^2  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } Cx = d
+\end{equation*}
+where $A \in \mathds{R}^{m \dot n}$ with 
+
+\textbf{rank}$A = n$, and $C \in \mathds{R}^{k \dot n}$ with \textbf{rank}$C = k$. Give the KKT conditions, and derive expressions for the primal solution $x^*$ and the dual solution $\lambda^*$.
+
+\underline{\textbf{Solution:}}
+If system $Cx = d$ has no solutions, then $p^* = +\infty$
+
+If system $Cx = d$ has solutions, then by Slater's conditions we have internal point:
+
+\begin{equation*}
+    L(x, \lambda) = \langle Ax - b, Ax -b \rangle + \lambda^T(Cx-d)
+\end{equation*}
+
+\begin{equation*}
+    \begin{cases}
+    \nabla_x L = 2A^T(Ax-b) + \lambda^TC = 0 \\ 
+    \nabla_{\lambda} L = Cx - d= 0
+    \end{cases}
+\end{equation*}
+
+\begin{equation*}
+    \begin{cases}
+    x = (A^TA)^{\dag}(A^Tb - \frac{1}{2}\lambda^TC) \\
+    x = C^{\dag}d
+    \end{cases}
+\end{equation*}
+Then we get: 
+
+\begin{equation*}
+(A^TA)^{\dag}(A^Tb - \frac{1}{2}\lambda^TC) = C^{\dag}b
+\end{equation*}
+
+\begin{equation*}
+    A^Tb - \frac{1}{2}\lambda^TC = (A^TA)^{\dag})^{\dag} (C^{\dag}b) = (A^TA)(C^{\dag}b)
+\end{equation*}
+Then we get $\lambda^*$
+\begin{equation*}
+    \lambda^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}b)C^{\dag})^T
+\end{equation*}
+
+\underline{\textbf{Answer:}}
+
+\begin{equation*}
+    \begin{cases}
+        \text{if system } Cx = d \text{ has no solutions ,} p^* = +\infty \\
+        x^* = C^{\dag}d, \lambda^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}b)C^{\dag})^T \text{, otherwise} \\
+    \end{cases}
+\end{equation*}
+
+\subsection{Problem №9}
+Derive the KKT conditions for the problem 
+
+\begin{equation*}
+    trX - \log (detX) \xrightarrow{} \min\limits_{X \in \mathds{S}_{++}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } Xs = y
+\end{equation*}
+, where $y \in \mathds{R}^n$ and $s \in \mathds{R}^n$ are given with $y^Ts = 1$. Verify that the optimal solution is given by:
+\begin{equation*}
+    X^* = I + yy^T - \frac{1}{s^Ts}ss^T
+\end{equation*}
+
+\underline{\textbf{Solution:}}
+Let's write Lagrangian:
+\begin{equation*}
+    L(x, \lambda) = trX  - \log (detX) + \lambda^T(Xs - y)
+\end{equation*}
+It can be seen that Slaters conditions are met: problem is convex and all functions in conditions are affine.
+
+\begin{equation*}
+    \begin{cases}
+        \nabla_x L = I - X^{-1} + \lambda s^T = 0 \text{ } | \text{ }  \cdot y \\ 
+        \nabla_{\lambda} L = Xs - y = 0
+    \end{cases}
+\end{equation*}
+
+$X^* = I + yy^T - \frac{1}{s^Ts}ss^T$:
+
+\begin{equation*}
+    X^*s - y = Is + yy^Ts - \frac{1}{s^Ts}ss^Ts - y = s + y - s - y = 0
+\end{equation*}
+
+Wohoo, it's feasible for KKT! Let's find lambda for that point:
+\begin{equation*}
+\begin{cases}
+    y - X^{-1}y + \frac{1}{2}(\lambda s^T + s \lambda^T) y = 0 \\
+    s = X^{-1}y 
+    \end{cases}
+\end{equation*}
+
+\begin{equation*}
+    \begin{cases}
+    y - s + \frac{1}{2} (\lambda + s \lambda^T y ) = 0 \text{ } | \text{ } \cdot y^T \\
+    y^Ty - y^Ts + \frac{1}{2} ( y^T \lambda + y^T s \lambda^T y ) = y^Ty - 1 + \lambda^Ty = 0 \text{ } | \text{ transpose}
+    \end{cases}
+\end{equation*}
+
+\begin{equation*}
+    \begin{cases}
+        \lambda y^T = 1 - y^Ty \text{ } | \text{ } \cdot s \\
+        \lambda = s - y^Tys
+    \end{cases}
+\end{equation*}
+
+\subsection{Problem №10}
+Supporting hyperplane interpretation of KKT conditions. Consider a convex problem with no equality constraints
+
+\begin{equation*}
+    f_0(x)  \xrightarrow{} \min\limits_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+   \text{s.t. } f_i(x) \leq 0\text{, } i = \overline{1, m}
+\end{equation*}
+
+Assume, that $\exists x^* \in \mathds{R}^n, \mu^* \in \mathds{R}^m$ satisfy the KKT conditions
+
+\begin{equation*}
+    \begin{cases}
+        \nabla_x L(x^*, \mu^*) = \nabla f_0(x^*) + \sum\limits_{i=1}^m \mu_i^* \nabla f_i(x^*) = 0 \\
+        \mu_i^* \geq 0\text{, } i = \overline{1, m} \\
+        \mu_i^*f_i(x^*) = 0\text{, } i = \overline{1, n} \\
+        f_i(x^*) \leq 0 \text{, } i = \overline{1, n}
+    \end{cases}
+\end{equation*}
+Show that:
+\begin{equation*}
+    \nabla f_0(x^*)^T(x - x^*) \geq 0 
+\end{equation*}
+for all feasible x. In other words the KKT conditions imply the simple optimality criterion or $\nabla f_0(x^*)$ defines a supporting hypperplane to the feasible set at $x^*$. 
+
+\underline{\textbf{Solution:}}
+We all know that for convex functions is right that criterion for feasible $x^*$:
+\begin{equation*}
+    f_i(x) \geq f_i(x^*) + \nabla f_i(x^*)^T(x-x^*) 
+\end{equation*}
+Let's multiply it on $\mu_i^*$ and sum by i:
+\begin{equation*}
+    \sum\limits_{i=1}^{m}f_i(x)\mu_i^* \geq \sum\limits_{i=1}^m f_i(x^*)\mu_i^* + \sum\limits_{i=1}^n \mu_i^* \nabla f_i(x^*)^T(x-x^*)
+\end{equation*}
+
+From KKT we know: $\sum\limits_{i=1}^n \mu_i^* \nabla f_i(x^*)^T(x-x^*) = - \nabla f_0(x^*)^T(x-x^*)$,  $f_i(x) \leq 0$ and $f_i^*(x^*)\mu_i^* = 0$.
+
+\begin{equation*}
+    0 \leq \sum\limits_{i=1}^{m}f_i(x)\mu_i^* \leq -\nabla f_0(x^*)^T(x-x^*)
+\end{equation*}
+And we get:
+\begin{equation*}
+    \nabla f_0(x^*)^T(x-x^*) \geq 0 
+\end{equation*}
+
+
+

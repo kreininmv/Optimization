@@ -1,0 +1,225 @@
+\section{Duality}
+
+\subsection{Problem №1}
+Express the dual problem of
+\begin{equation*}
+    c^Tx \rightarrow 1\min_{x \in \mathds{R}^n}
+\end{equation*}
+\begin{equation*}
+    \text{s.t. } f(x) \leq 0
+\end{equation*}
+with $c \not = 0$, in terms of the conjugate function $f^*$. Explain why the problem you give is convex. We do not assume f is convex.
+
+\underline{\textbf{Solution:}}
+Let's write lagrangian ($\lambda \geq 0, \lambda \in \mathds{R}^n$):
+\begin{equation*}
+    L(x, \lambda) = c^Tx + \lambda f(x) 
+\end{equation*}
+\begin{equation*}
+    g(\lambda) = \inf_{x \in \mathds{R}^n}(c^Tx + \lambda f(x)) = - \lambda \sup_{x \in \mathds{R}^n} (-\frac{1}{\lambda}c^Tx - f(x)) = \text{ } | \text{ by definition } | \text{ } = - \lambda f^*(-\frac{c}{\lambda}) 
+\end{equation*}
+
+Okay, let's write dual problem.
+
+\begin{equation*}
+    -\lambda f^*(-\frac{c}{\lambda}) \rightarrow \max_{\lambda \in \mathds{R}}
+\end{equation*}
+\begin{equation*}
+    \text{s. t. } \lambda \geq 0
+\end{equation*}
+
+\underline{\textbf{Answer:}} It's concave function
+
+\subsection{Problem №2}
+Minimum volume covering ellipsoid. Let we have the primal problem:
+\begin{equation*}
+    \log \det X^{-1} \rightarrow \min_{X \in \mathds{S}_{++}^n}
+\end{equation*}
+\begin{equation*}
+    \text{s. t. } a_i^TXa_i \leq 1 \text{, } i = 1, ..., m
+\end{equation*}
+\begin{enumerate}
+    \item Find Lagrangian of the primal problem
+    \item Find the dual function
+    \item Write down the dual problem
+    \item Check whether problem holds strong duality or not
+    \item Write down the solution of the dual problem
+\end{enumerate}
+
+\underline{\textbf{Solution:}}
+$f_i(X) = a_i^TXa_i - 1$, $f(X) = (f_1, ..., f_m)$.
+\begin{enumerate}
+\item
+\begin{equation*}
+    L(x, \lambda) = \log \det X^{-1} + \sum\limits_{i=1}^m \lambda_i (a_i^TXa_i - 1)= \log \det X^{-1} + \lambda^T f(X)
+\end{equation*}
+
+\item  We can really easy find the dual function for this problem, because we have already find the conjugate function in first homework.
+\begin{equation*}
+    f^*(Y) = -n + \log \det(-Y^{-1}) \text{, where } Y \in \mathds{S}_{++}^n
+\end{equation*}
+
+\begin{equation*}
+    g(\lambda, \nu) = -b^T\lambda - d^T\nu - f_0^*(-A^T\lambda-C^T\nu)
+\end{equation*}
+
+\begin{equation*}
+    g(\lambda) = \begin{cases}
+     \log \det \left( \sum\limits_{i=1}^m \lambda_i a_ia_i^T \right) 
+      - \mathds{1}^T \lambda + n, \sum\limits_{i=1}^m \lambda_i a_ia_i^T \succ 0 \\
+      
+     +\infty \text{, otherwise}
+    \end{cases}
+\end{equation*}
+
+
+\item
+
+\begin{equation*}
+    \log \det \left(\sum\limits_{i=1}^m(\lambda_i a_ia_i^T) \right) + n - \lambda^T\mathds{1} \rightarrow \max_{\lambda \in \mathds{R}^m}
+\end{equation*}
+\begin{equation*}
+    \text{s. t. } \lambda \succcurlyeq 0
+\end{equation*}
+
+\item Strong duality holds, because Slater's conditions are performed, it menas that $\exists X \in \mathds{S}_{++}^n$ such that $a_i^TXa_i < 1$, $i \in \overline{1, m}$
+
+\item Let's solve it! From fully symmetric problem and many iterations, when I am trying to solve this problem, I get that $\lambda $ will be like that $\lambda = (\alpha, \alpha, ..., \alpha)$.
+
+Okay, it's feasible to our budget set, let's put in our function.
+
+\begin{equation*}
+    g(\lambda) = \log \det \left(\sum\limits_{i=1}^m(\alpha a_ia_i^T) \right) + n - \alpha m = 
+    \log \alpha^n \det \left(\sum\limits_{i=1}^m a_ia_i^T \right) + n - \alpha m
+\end{equation*}
+
+Okay, from it we need to maximize only: $h(\alpha) = n \log \alpha - \alpha m$, it's concave function and local maximum will be global.
+
+\begin{equation*}
+    h'(\alpha) = \frac{n}{\alpha} - m = 0
+\end{equation*}
+From it we get that: $\alpha^* = \frac{n}{m}$ and $h(\alpha^*) = n \log \frac{n}{m} - n$
+\begin{equation*}
+    g(\lambda^*) = \log \det \left(\sum\limits_{i=1}^m a_ia_i^T \right) + n \log \frac{n}{m}
+\end{equation*}
+
+We all remember, that:
+\begin{equation*}
+    \nabla_X L(X, \lambda) = -X^{-1} + \sum\limits_{i=1}^m \lambda_i a_ia_i^T = 0
+\end{equation*}
+
+\begin{equation*}
+    \nabla_{\lambda} L(X, \lambda) = \sum\limits_{i=1} (a_i^TXa_i - 1) = 0
+\end{equation*}
+Okay, let's show that $\nabla_{\lambda} L(X^*, \lambda^*) = 0$, if $X^-1 = \sum\limits_{i=1}^m \lambda_i a_ia_i^T$.
+
+\begin{equation*}
+    \nabla_{\lambda} L \sum\limits_{i=1}(a_i^T \left( \sum\limits_{i=1}^m \alpha a_ia_i^T \right)^{-1} a_i) - m = 
+    \sum_{i=1}^m \langle a_ia_i^T, \left( \sum\limits_{i=1}^m \alpha a_ia_i^T \right)^{-1} \rangle - m 
+\end{equation*}
+
+And we get:
+\begin{equation*}
+    \langle \sum_{i=1}^m  a_ia_i^T,  \left( \sum\limits_{i=1}^m \alpha a_ia_i^T \right)^{-1} \rangle - m = \frac{n}{\alpha} - m = \text{ } | \text{ } \alpha = \frac{n}{m} | \text{ } = \frac{n}{n/m} - m = 0
+\end{equation*}
+Youhoo, our $\alpha^*$ is feasible for Slater's conditions. And if we input $X^*$ into $f_0(X)$ we will get:
+
+\begin{equation*}
+    f_0(X^*) = \log \det (\sum\limits_{i=1}^m \alpha a_ia_i^T) = n \log \alpha + \log \det \sum\limits_{i=1}^m a_ia_i^T  = n \log \frac{n}{m} + \log \det \sum\limits_{i=1}^m a_ia_i^T
+\end{equation*}
+\begin{equation*}
+    g(\lambda^*) =  \log \det \sum\limits_{i=1}^m a_ia_i^T  + n \log \frac{n}{m}
+\end{equation*}
+We show strong duality and solve duality problem.
+
+\end{enumerate}
+
+\subsection{Problem №3}
+A penalty method for equality constraints. We consider the problem of minimization.
+
+\begin{equation*}
+f_0(x) \rightarrow \min_{x \in \mathds{R}^n}
+\end{equation*}
+\begin{equation*}
+    \text{s. t. } Ax = b
+\end{equation*}
+where $f_0(x) : \mathds{R}^n \xrightarrow{} \mathds{R}$ is convex and differentiable, and $A \in \mathds{R}^{m \dot n}$ with rank$A = m$.
+
+In a quadratic penalty method, we form an auxiliary function:
+\begin{equation*}
+    \phi (x) = f_0(x) + \alpha ||Ax - b||_2^2
+\end{equation*}
+where $\alpha > 0$ is a parameter. This auxiliary function consists of the objective plus the penalty term $\alpha ||Ax - b||_2^2$. The idea is that a minimizer of the auxiliary function, $\widetilde{x}$, should be an approximate solution of the original problem. Intuition suggests that the larger the penalty weight $\alpha$, the better the approximation $\widetilde{x}$ to a solution of the original problem. Suppose $\widetilde{x}$ is a minimizer of $\phi(x)$. Show how to find, from $\widetilde{x}$, a dual feasible point for the original problem. Find the corresponding lower bound on the optimal value of the original problem.
+
+\underline{\textbf{Solution:}}
+Let's write lagrangian:
+\begin{equation*}
+    L(x, \lambda) = f_0(x) + \lambda^T(Ax -b )
+\end{equation*}
+
+\begin{equation*}
+\nabla_x L(x, \lambda) = \nabla f_0(x) + A^T \lambda    
+\end{equation*}
+
+If $\widetilde{x}$ is min in $\phi(x)$, then we get:
+\begin{equation*}
+    \nabla \phi(\widetilde{x}) = \nabla f_0(\widetilde{x}) + 2\alpha A^T(A\widetilde{x} - b) = 0
+\end{equation*}
+And from that we get:
+\begin{equation*}
+    \lambda  = 2 \alpha(A\widetilde{x} -b)
+\end{equation*}
+
+Let's write the dual problem to that:
+
+\begin{equation*}
+    g(\lambda) = \inf_{x \in \mathds{R}^n} (f_0(x) + \lambda^T(Ax - b) = f_0(\widetilde{x}) + 2\alpha ||A\widetilde{x} - b|_2^2
+\end{equation*}
+And for all x such that: $Ax = b$
+\begin{equation*}
+    f_0(x) \geq f_0(\widetilde{x}) + 2\alpha ||A\widetilde{x} - b||_2^2
+\end{equation*}
+
+And when we increasing alpha we get higher lower bound for the original problem.
+
+\subsection{Problem №4}
+Analytic centering. Derive a dual problem for
+
+\begin{equation*}
+- \sum\limits_{i=1}^m \log (b_i - a_i^Tx) \rightarrow \min_{x \in \mathds{R}^n}
+\end{equation*}
+
+\begin{equation*}
+    \text{with domain } \{x | a_i^T x < b_i, i \in \overline{1, m} \}
+\end{equation*}
+
+First introduce new variables $y_i$ and equality constraints $y_i = b_i - a_i^Tx$. (The solution of this problem is called the analytic center of the linear inequalities $a_i^Tx \leq b_i$, $i \in \overline{1, m}$. Analytic centers have geometric applications, and play an important role in berrier methods).
+
+\underline{\textbf{Solution:}}
+Let's take $y_i = b - a_i^Tx$.
+\begin{equation*}
+    L(x, y, \nu) = - \log \sum\limits_{i=1}^m \log y_i + \sum\limits_{i=1}^m\nu_i(y_i - b_i + a_i^Tx)
+\end{equation*}
+
+The dual function will be:
+\begin{equation*}
+    g(\nu) = \inf_{x, y \in domain} ( - \sum\limits_{i=1}^m \log y_i + \sum\limits_{i=1}^m\nu_i(y_i + a_i^Tx)) + \nu^Tb
+\end{equation*}
+
+If $\sum\limits_{i=1}^m \nu_i a_i^T = \nu^TA = 0$ it's not true, than it will unbounded bellow. If $\nu \not \succ 0$ it will be also unbounded below. Let's write our function, the optimal is $y_i = \frac{1}{\nu_i}$.
+
+\begin{equation*}
+    g (\nu) = \begin{cases}
+        \sum\limits_{i=1}^m \log \nu_i + m - \nu^Tb \text{, } \nu^TA = 0\text{, } \nu \succ 0 \\
+        -\infty \text{, otherwise}
+    \end{cases}
+\end{equation*}
+
+Dual problem will be:
+\begin{equation*}
+ \sum\limits_{i=1}^m \log \nu_i + m -\nu^T b \rightarrow \max_{\nu \in \mathds{R}^m}
+\end{equation*}
+
+\begin{equation*}
+    \text{s.t. } \nu^TA = 0
+\end{equation*}

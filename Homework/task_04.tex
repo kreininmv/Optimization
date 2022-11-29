@@ -1,0 +1,247 @@
+\section{Convex functions}
+
+\subsection{Problem №1}
+Is $f(x) = -x \cdot lnx - (1-x)ln(1-x)$ convex?
+
+\underline{\textbf{Solution:}}
+
+\begin{equation*}
+    \nabla^2 f(x) = \frac{\partial}{\partial x} \left( -lnx - 1 + ln(1-x) + 1\right) = \frac{-1}{x} - \frac{-1}{1-x} = \frac{-1}{x(1-x)} < 0
+\end{equation*}
+because $x \in (0, 1)$ it is right. From this we get that f(x) is concave function, but not convex.
+
+\underline{\textbf{Answer:}} No, it's not convex function, it's concave function.
+
+\subsection{Problem №2}
+Let x be a real variable with the values $a_1 < a_2 < ... < a_n$ with probabilities $\mathds{P} (x = a_i) = p_i$. Derive the convexity or concavity of the following functions from p on the set of $\left\{p \text{ | } \sum\limits_{i = 1}^n p_i = 1, \text{ } p_i \geq 0 \right)$
+
+\underline{\textbf{Solution:}}
+We know that linear function: $a^Tx + b$ convex and concave function at the same time.
+
+\textbf{1.} $\mathds{E}x = \sum\limits_{i = 1}^n a_i \cdot p_i$ -- that's linear function, therefore math expectation is convex and concave function.
+
+\textbf{2.} $\mathds{P} \{x \geq \alpha \} = \sum\limits_{i: a_i \geq \alpha} p_i$ -- it's linear function, therefore it's convex and concave function.
+
+\textbf{3.} $\mathds{P} \{\alpha \leq x \leq \beta \} = \sum\limits_{i: \alpha \leq a_i \leq b_i}^n p_i$, we get that is convex and concave function.
+
+\textbf{4.} $\sum\limits_{i = 1}^n p_i \log p_i$.
+
+Okay, let's check is $f(x) = x \log x $ - convex
+
+$\nabla^2f(x) = (x \log x)^{''} = (\log x + 1)^{'} = \frac{1}{x} > 0$, because $x > 0$ - yep, it's convex function. And our function is non-negative sum of convex function, then our function is convex function.
+
+\textbf{5.} $\mathds{V} x = \mathds{E} (x-\mathds{E}x)^2 = \mathds{E}x^2 - \left( \mathds{E} x\right)^2$
+
+Okay, let's take counterexample for this function:
+\begin{enumerate}
+    \item  $p_a = (1, 0)$, $x = (0, 1)$, $\mathds{V}x = 1 \cdot 1^2 - (1 \cdot 1)^2 = 0$
+
+    \item $p_b = (0, 1)$, $x = (0, 1)$, $\mathds{V}x = 0 \cdot 1^2 + 1 \cdot 0^2 - (1 \cdot 0 + 0 \cdot 1)^2 = 0$
+
+    \item $p_c = 0.5\cdot p_a + 0.5 \cdot p_b = (\frac{1}{2}, \frac{1}{2})$, $x = (0, 1)$,
+    $\mathds{V}x = 0.5 \cdot 1^2 - (0.5 \cdot 1)^2 = 0.25$
+\end{enumerate}
+
+By definition of convex function the following equality is right:
+\newline
+\begin{equation*}
+f(\theta x + (1-\theta)y ) \leq \theta f(x) + (1-\theta) f(y)    
+\end{equation*}
+But:
+\begin{equation*}
+    f(0.5p_a + 0.5p_b)=\frac{1}{4} \leq \frac{1}{2}f(p_a) + \frac{1}{2}f(p_b) = 0 + 0 = 0
+\end{equation*}
+And we get that it's not convex function, it's concave function.
+
+\textbf{6.} \textbf{quatile}(x) = $\inf \{ \beta$ | $\mathds{P} \{x \leq \beta \} \geq 0.25\}$ 
+
+$\inf$ is convex function, which is defined on probabilistic simplex, which is convex set, then \textbf{quartile}$(x)$ is convex function (Boyd 87 page, statement (3.16)).
+
+\underline{\textbf{Answer:}}
+\textbf{a-c} convex and concave function,  \textbf{d.} convex function, \textbf{e.} 
+concave function. \textbf{f.} convex function.
+
+\subsection{Problem №3}
+Show, that $f(A) = \lambda_{max}(A)$ -- is convex, if $A \in S^n$
+
+\underline{\textbf{Solution:}}
+Okay, let's show that's is false if $A \in \mathds{R}^{2n}$:
+
+Let's take: 
+\begin{equation*}
+    A = \begin{bmatrix}
+    -8 & 16 \\
+    60 & 4 
+\end{bmatrix} \text{, }     B = \begin{bmatrix}
+    2 & 40 \\
+    20 & -2
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \lambda_{max}(0.5 A + 0.5B) = \lambda_{max} \left( \begin{bmatrix}
+        -3 & 28 \\
+        40 & 1
+    \end{bmatrix} \right) \leq 0.5 \lambda_{max}\left(\begin{bmatrix}
+    -8 & 16 \\
+    60 & 4 
+\end{bmatrix} \right) + 0.5 \lambda_{max}\left( \begin{bmatrix}
+    2 & 40 \\
+    20 & -2
+\end{bmatrix}\right)
+\end{equation*}
+
+$ \lambda_{max} \left( \begin{bmatrix}
+        -3 & 28 \\
+        40 & 1
+    \end{bmatrix} \right)$, $\lambda_{max}\left( \begin{bmatrix}
+        -3 & 28 \\
+        40 & 1
+    \end{bmatrix} \right) = 2(\sqrt{249} - 1)$, $\lambda_{max} \left(\begin{bmatrix}
+    -8 & 16 \\
+    60 & 4 
+\end{bmatrix} \right) = 2\sqrt{201}$
+
+\begin{equation*}
+    \sqrt{1124} - 1 \approx 32.52 \leq \sqrt{249} - 1 + \sqrt{201} \approx 28.96
+\end{equation*}
+
+We see that the inequality for a convex function does not hold. Hence, it is not a convex function
+
+\underline{\textbf{Solution:}}
+If $A \in \mathds{S}^n$
+
+We need to consider only diagonal matrix, because all others matrices we can get by multiplying by orthogonal matrices on both sides (they are the same because A - symmetric matrix, $A = \Sigma^T D \Sigma$).
+
+And when we gonna find $\lambda(A) = det(A - \lambda I) = det(\Sigma^T D \Sigma - \lambda \Sigma^T \Sigma)  = \lambda(D - \lambda I)$, $D $-- diagonal matrix.
+
+$\forall \theta \in (0, 1)$, for $\theta = 0$ or $\theta = 1$ it's trivial. $A, B$ -- diagonal matrices. 
+
+\begin{equation*}
+    \theta \cdot A + (1-\theta) \cdot B - \lambda I) = \begin{bmatrix}
+    \theta \lambda_1^a + (1-\theta) \lambda_1^b  && 0 && ... \\
+    0 & \theta \lambda_2^a + (1-\theta) \lambda_2^b && 0 \\
+    \end{bmatrix}
+\end{equation*}
+
+And from that:
+\begin{equation*}
+    \lambda_{max}(\theta A + (1-\theta)B) = \sup\limits_{i = 1, n} ( \theta \lambda_i^a + (1-\theta) \lambda_i^b) \leq \theta \cdot \sup\limits_{i = 1, n}(\lambda_{i}^a) + (1-\theta)\sup\limits_{i = 1, n}(\lambda_i^b)
+\end{equation*}
+
+\begin{equation*}
+    \theta \cdot \sup\limits_{i = 1, n}(\lambda_{i}^a) + (1-\theta)\sup\limits_{i = 1, n}(\lambda_i^b) = \theta \lambda_{max}(A) + (1-\theta)\lambda_{max}(B)
+\end{equation*}
+
+Wohoo, we proved that $\lambda_{max}$ is convex function.
+
+\underline{\textbf{Alternative solution:}}
+$\lambda_{max}(A) = \max\limits_{||u|| = 1} \langle u, Au \rangle$. 
+
+We know that $f(A) = \langle u, Au \rangle$ is linear function, which means it's convex function. $max$ is convex non-decreasing function. And from that we get that composition of this function is convex function.
+
+Wohoo, we proved that $\lambda_{max}$ is convex function.
+
+\subsection{Problem №4}
+Prove that, $f(X) = - \log \det X$ is convex on $X \in \mathds{S}_{++}^n$
+
+\underline{\textbf{Solution:}}
+\begin{equation*}
+df(x) = - \frac{1}{detX} detX \langle X^{-T}, dX \rangle = - \langle X^{-T}, dX \rangle
+\end{equation*}
+
+\begin{equation*}
+    d^2f(x) = -d(tr(X^{-1}, dX_1) = -tr(d(X^{-1})dX_1) = tr(X^{-1}dX_2X^{-1}dX_1)
+\end{equation*}
+For a reason that $X^{-1}, dX_1, dX_2 \in \mathds{S}_{++}^n$ trace is positive, the hessian of f(x) is positive, then we get that f(x) is convex function on $\mathds{S}_{++}^n$. 
+In later I understand that $dX_1$ and $dX_2$ can be non positive matrices. And this is an unfair statement.
+
+\underline{\textbf{Alternative solution:}}
+Let's take: $X = A + tB$, $A \in \mathds{S}_{++}^n, B \in \mathds{S}^n$, $t$ is such for which $A + tB \succ 0$. We can represent A as $A = CC$, $det(A) = det(CC) = (detC)^2$.
+\newline 
+$F(t) = \log det(A + tB)$.
+
+\begin{equation*}
+    F(t) = \log det(A + tB) = \log det(CC + tB) = \log det(C(I + t C^{-1}BC^{-1})C) 
+\end{equation*}
+
+\begin{equation*}
+    F(t) = \log det(I + tC^{-1}BC^{-1}) + \log detA
+\end{equation*}
+Let's write $C^{-1}BC^{-1} = U \Sigma V^*$, $\Sigma = diag(\lambda_1, ..., \lambda_n)$, because it's symmetric, $U = V$, then:
+\begin{equation*}
+    F(t) = \log det(UU^* + tU\Sigma U^*) + \log detA = \log det(U(I + t\Sigma)U^*) + \log detA 
+\end{equation*}
+
+\begin{equation*}
+    F(t) = \log det(I + t \Sigma) + \log detA = \log \prod\limits_{i=1}^n(1 + t \lambda_i) + \log detA= \sum\limits_{i=1}^n \log(1 + t\lambda_i) + \log detA
+\end{equation*}
+Then F(t) is concave function, because it's sum of concave functions. Then we get that $-F(t)$ is convex function. Wohoo, we proved it.
+
+
+\subsection{Problem №5}
+
+Prove, that adding $\lambda ||x||_2^2$ to any convex function $g(x)$ ensures strong convexity function of a resulting function $f(x) = g(x) + \lambda ||x||_2^2$. Find the constant of the strong convexity $\mu$.
+
+\underline{\textbf{Solution:}}
+\begin{equation*}
+    \frac{\partial^2}{\partial x_l \partial x_k} \sum\limits_{i = 1}^n x_i = \frac{\partial}{\partial x_l} 2x_k = 0
+\end{equation*}
+\begin{equation*}
+    \frac{\partial^2}{(\partial x_k)} \sum\limits_{i = 1}^n x_i = \frac{\partial}{\partial x_k} 2x_k = 2
+\end{equation*}
+The hessian of $||X||_2^2$ is $2 I$. Then $\nabla^2 f(x) = \nabla^2 g(x) + \lambda \cdot 2I \succcurlyeq \lambda I$. It's right because g(x) is convex function.
+
+\subsection{Problem №6}
+Study the following function of two variables $f(x, y) = e^{xy}$.
+\begin{enumerate}
+    \item[a.] Is this function convex?
+    \item[b.] Prove, that this function will be convex on the line $x=y$.
+    \item[c.] Find another set in $\mathds{R}^2, on which this function will be convex$
+\end{enumerate}
+
+\underline{\textbf{Solution:}}
+\begin{enumerate}
+    \item[a.] No this function is not convex on $\mathds{R}^2$, because the hessian equals $-(1+2xy)e^{2xy}$ and it is less than zero for $x = 0, y = 1$.
+    \item[b.] $f(x, x) = e^{x^2}$, $\nabla^2 f(x) = 2(1+2x^2)e^{x^2} > 0$, $\forall x \in \mathds{R}$, and from that we get that $f(x)$ is strong convex function.
+    \item[c.] Let's take $y = x^3$, $f(x, x) = e^{x^4}$, $\nabla^2 f(x) = (12x^2 + 16x^6)e^{x^4} \geq 0 $, $\forall x \in \mathds{R}$
+\end{enumerate}
+
+\underline{\textbf{Answer:}} 
+\textbf{a.} No, this function is not convex on $\mathds{R}^2$, \textbf{b.} proved, \textbf{c.} $y = x^3$
+
+\subsection{Problem №7}
+Show, that the following function is convex on  the set of all positive denominators:
+\begin{equation*}
+    f(x) \frac{1}{x_1 - \frac{1}{x_2 - \frac{1}{x_3 - \frac{1}{...}}}}, \text{ , } x \in \mathds{R}^n
+\end{equation*}
+
+\underline{\textbf{Solution:}}
+$f_n = \frac{1}{x_n}, f_{n-1} = \frac{1}{x_{n-1} - f_n}$
+\newline 
+Let's make induction from n to n-1: $(f_n)^{''} = \frac{2}{x_n^3} > 0$, $x_n > 0$.
+\newline 
+$n - 1$: $f_{n-1} = \frac{1}{x_{n-1} - f_n}$, 
+\begin{equation*}
+    \nabla^2 f_{n-1}(x) = 
+    \begin{bmatrix}
+    \frac{2}{(x_{n-1}-f_n)^3} & \frac{2}{x_n^2(x_{n-1} -f_n)^3} \\
+    \frac{2}{x_n^2(x_{n-1} -f_n)^3} & \frac{2}{x_n^3(x_n-f_n)^2} + \frac{2}{x_n^4(x_{n-1} - f_n)^3} 
+    \end{bmatrix}
+\end{equation*}
+\begin{enumerate}
+    \item $\frac{2}{(x_{n-1}-f_n)^3} > 0$ it's true by a condition of a task.
+
+    \item $|\nabla^2f(x)| = \frac{4}{x_n^3(x_{n-1}-f_n)^3} + \frac{4}{x_n^4(x_{n-1}-f_n)^6} - \frac{4}{x_n^4(x_{n-1}-f_n)^6} = \frac{4}{x_n^3(x_{n-1} -f_n)^3} > 0$
+\end{enumerate}
+
+Wohoo, $\nabla^2 f_{n-1}(x)$ is positive defined matrix, it's means that $f_{n-1}$ is convex function.
+
+By induction we get that $f_1(x)$ is convex function.
+
+\underline{\textbf{Alternative solution:}}
+Exists a statement: if $\phi(x)$ is convex function that is monotonously decreasing and $\alpha(x)$ is concave function, than $f(x) = \phi(\alpha(x))$ will be convex function. 
+For our example: $\phi(x) = 1/x)$, $\phi(x)$ -- convex function, and $\alpha_k(x) = x_k - \phi(a_{k+1})$ is concave function, $\phi(x) = \alpha_n(x) = 1/x$, $-\alpha_i(x)$ is concave function.
+\newline
+We can represent f in the form of:
+$f(x) = \phi(x_1 - \phi(x_2 - \phi(x_{3} - ... \phi(x_{n-1} - \phi(x_n))...)$ will be convex function based on this statement. (3.2.4 Scalar composition, 84 page Optimization Boyd)

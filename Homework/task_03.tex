@@ -1,0 +1,159 @@
+ \section{Convex sets}
+
+\subsection{Problem №1}
+
+Show that the convex hull of the $\mathbf{S}$ set is the intersection of all convex sets containing $\mathbf{S}$
+
+\underline{\textbf{Solution:}}
+
+Firstly, we will prove that if A is a convex set, then any convex combination $x_1, .., x_n \in A$ will belong to A.
+
+For $n = 1$ it's trivial.
+
+Assume that this is true for any convex combination of n-1 points. Point $x = \sum\limits_{j=1}^n\alpha_j x_j$, $\sum\limits_{j=1}^n\alpha_j = 1$, $\alpha_1, ..., \alpha_n \in \mathds{R}$ and $n > 1$. Between $\alpha_1, ..., \alpha_n$ we can find $\alpha$ that will not be equal to 1. Without limiting the generality we consider that $\alpha \not = 1$.
+\begin{equation*}
+    \overline{\alpha_j} = \frac{\alpha_j}{1-\alpha_1}\text{, }j = 2, ..., n
+\end{equation*}
+Because $    \sum\limits_{j=2}^n\overline{\alpha_j} = 1 $
+and from induction we can get that $ \overline{x} = \sum\limits_{j=1}^n\overline{\alpha_j}x_j \in A $
+Then from convex of A we get:
+\begin{equation*}
+    x = \sum\limits_{j=1}^n\alpha_jx_j = \alpha_1x_1 + (1-\alpha_1)\sum\limits_{j=1}^n\frac{\alpha_j}{1-\alpha_1}x_j = \alpha_1 x_1 + (1-\alpha_1)\overline{x} \in A
+\end{equation*}
+
+From the proven it follows that if some convex set contains A, then it contains any convex combination of points from A, which means it contains convex hull of A. Let's show that convex hull of A is a convex set, in that case it coincides with the intersection of all convex sets containing A. Let's take random points from convex hull A. 
+\begin{equation*}
+    x = \sum\limits_{j=1}^n \alpha_jx_j \text{, } y = \sum\limits_{j = 1}^m \beta_jy_j
+\end{equation*}
+For any $\alpha \in [0, 1]$, we get:
+\begin{equation*}
+    (1-\alpha)x + \alpha y =\sum\limits_{j=1}^n(1-\alpha)\alpha_jx_j + \sum\limits_{j=1}^m\alpha \beta_j y_j
+\end{equation*}
+
+\begin{equation*}
+    \sum\limits_{j=1}^n(1-\alpha)\alpha_j + \sum\limits_{j=1}^m\alpha \beta_j = (1-\alpha) + \alpha = 1
+\end{equation*}
+We get a convex combination of points $x_1, ..., x_n, y_1, ..., y_m$, which belongs to convex hull of A. 
+
+WOHOO!!!
+
+
+\subsection{Problem №2}
+Show that the set of directions of the strict local descending of the differentiable function in a point is a convex cone.
+
+\underline{\textbf{Solution:}}
+It's trivial! Just imagine this picture in your mind, and it will become obvious, in general by definition.
+
+\subsection{Problem №3}
+Prove, that if S is convex, then $S + S = 2S$. Give a counterexample in case, when S -- is not convex.
+
+\underline{\textbf{Solution:}} 
+Let's show that: $2S \subseteq S + S:$ $\forall 2a \in 2S$, $\exists z= x + y \in S +S : z = 2a,$ $x, y \in S$. It's true, we can take $x = y = a$. We have proved that $2S \subseteq S +S$
+
+Let's show that: $S + S \subseteq 2S:$ $\forall z \in S + S \exists 2a \in 2S : 2a = z$, $a = 0.5 x + 0.5 y$, $a \in S$ for reason that S is a convex set. And linear combination of its elements will belong to S. We prove that $S + S \subseteq 2S$.
+
+It means that $S + S = 2S$.
+
+\underline{\textbf{Counterexample:}} if S isn't convex. $S = \{0\} \bigcup [1, 2]$. 
+\newline
+$S + S = [0, 4]$, but $2S = {0} \bigcup [2, 4]$, $S + S \not = 2S$
+
+\subsection{Problem №4}
+Let $x \in \mathds{R}$ is a random variable with a given probability distribution of $\mathds{P}(x = a_i) = p_i$, where $i = 1, ..., n,$ and $a_1 < ... < a_n$. It is said the probability vector of outcomes of $p \in \mathds{R}^n$ belongs to the probabilistic simpex, i.e. $P = \{ p | \textbf{1}^Tp = 1, p \succcurlyeq 0\} = \{ p | p_1 + ... + p_n = 1, p_i \geq 0 \}$.
+\newline
+Determine if the following sets of p are convex:
+\begin{itemize}
+    \item $\alpha < \mathds{E} f(x) < \beta$, where $\mathds{E}f(x)$ stands for expected value of $f(x) : \mathds{R} \xrightarrow{} \mathds{R}$, i.e. $\mathds{E}f(x) = \sum\limits_{i=1}^n p_i\cdot f(a_i)$
+
+    \item $\mathds{E}x^2 \leq \alpha$
+    \item $\mathds{V}x \leq \alpha$
+\end{itemize}
+
+\underline{\textbf{Solution:}}
+
+\underline{\textbf{A. }} It's right because we reduce constraints on p as constraints on the half-space, it will follow from this that the set is convex.
+
+\begin{equation*}
+    \alpha < \mathds{E} f(x) = \sum\limits_{i=1}^n p_if(a_i) < \beta
+\end{equation*}
+From the geometry it is half-space and convex, and it means that our set is also convex.
+
+
+\underline{\textbf{B. }}
+Here, we have the same idea like in \underline{\textbf{A.}}. We reduce constraints on p as constraints on the half-space, it will follow this that set is convex.
+\begin{equation*}
+\mathds{E} x^2 = \sum\limits_{i = 1}^n p_i a_i^2 \leq \alpha
+\end{equation*}
+
+\underline{\textbf{C.}}
+\begin{equation*}
+    0 \leq \mathds{V}x = \mathds{E}x^2 - (\mathds{E} x)^2 = \sum\limits_{i = 1}^n p_i a_i^2 - \left( \sum\limits_{i = 1}^n p_ia_i \right)^2 = -p^TXp + d^Tp \leq \alpha
+\end{equation*}
+where $d_i = a_i^2$ and $X = aa^T$, $X \succ 0$. This is a parabola with branches down in multidimensional space, it's concave function. And we also know that it will not be a convex set. For example, $-x^2 < 30$ will not be a convex set.
+
+\underline{\textbf{Answer:}}
+\textbf{A.-B.} convex. \textbf{C} is not convex.
+
+\subsection{Problem №5}
+Let $S \subset \mathds{R}^n$ is a set of solutions to the quadratic inequality:
+
+\begin{equation*}
+    S = \{x \in \mathds{R}^n \text{ | } x^TAx + b^Tx + c \leq 0 \}\text{; } A \in \mathds{S}^n, b \in \mathds{R}^n, c \in \mathds{R}
+\end{equation*}
+\begin{itemize}
+    \item Show that if $A \succcurlyeq 0$, S is convex. Is the opposite true?
+    \item Show that intersection of S with the hyperplane defined by the $g^Tx + h = 0$, $g \not = 0$ is convex if $A + \lambda gg^T \succcurlyeq 0$ for some $\lambda \in \mathds{R}$. Is the opposoite true?
+\end{itemize}
+
+\underline{\textbf{Solution:}}
+
+\underline{\textbf{A.)}}
+$x, y \in S$, $\theta \in [0, 1]$. If $\theta = 0$ or 1, it's trivial.
+
+\begin{equation*}
+    \theta x^TAx + \theta b^Tx + \theta c \leq 0
+\end{equation*}
+
+\begin{equation*}
+    (1-\theta) y^TAy + (1-\theta) b^Ty + (1-\theta) c \leq 0
+\end{equation*}
+
+\begin{equation*}
+    (\theta x + (1-\theta)y)^TA(\theta x + (1-\theta)y) + b^T(\theta x + (1-\theta)y) + c \leq 0
+\end{equation*}
+
+\begin{equation*}
+    \theta^2 x^TAx + \theta(1-\theta)\left(y^TAx + x^TAy \right) + (1-\theta)^2 y^TAy + \theta b^Tx + (1-\theta)b^Ty + c \leq 0
+\end{equation*}
+
+Okay, lets' add $\theta x^TAx + (1-\theta)y^TAy$ and subtract it. 
+\newline
+$z = \theta^2 x^TAx + \theta(1-\theta)\left(y^TAx + x^TAy \right) + (1-\theta)^2 y^TAy - \theta x^TAx - (1-\theta)y^TAy $
+
+\begin{equation*}
+    z + \left(\theta x^TAx + \theta b^Tx + \theta c \right) + \left((1-\theta)y^TAy + (1-\theta)b^Ty + (1-\theta)c \right) \leq 0
+\end{equation*}
+From that
+\begin{equation*}
+    z = \theta^2 x^TAx + \theta(1-\theta)\left(y^TAx + x^TAy \right) + (1-\theta)^2 y^TAy - \theta x^TAx - (1-\theta)y^TAy  \leq 0
+\end{equation*}
+
+\begin{equation*}
+    \theta(1-\theta) x^TAx + (1-\theta)\theta y^TAy \geq \theta(1-\theta)(y^Tax + x^TAy)
+\end{equation*}
+
+\begin{equation*}
+    x^TA(x-y) + (y-x)^TAy \geq 0
+\end{equation*}
+It's right because $A \succcurlyeq 0$. 
+
+\underline{\textbf{B.)}} I didn't do it.
+
+
+
+
+
+
+
+
+
