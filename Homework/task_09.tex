@@ -28,7 +28,7 @@ Okay, let's write dual problem.
     \text{s. t. } \lambda \geq 0
 \end{equation*}
 
-\underline{\textbf{Answer:}} It's concave function
+\underline{\textbf{Answer:}} It's concave function by definition of conjugate function.
 
 \subsection{Problem №2}
 Minimum volume covering ellipsoid. Let we have the primal problem:
@@ -54,7 +54,7 @@ $f_i(X) = a_i^TXa_i - 1$, $f(X) = (f_1, ..., f_m)$.
     L(x, \lambda) = \log \det X^{-1} + \sum\limits_{i=1}^m \lambda_i (a_i^TXa_i - 1)= \log \det X^{-1} + \lambda^T f(X)
 \end{equation*}
 
-\item  We can really easy find the dual function for this problem, because we have already find the conjugate function in first homework.
+\item  We can really easilly find the dual function for this problem because we have already found the conjugate function in the first homework.
 \begin{equation*}
     f^*(Y) = -n + \log \det(-Y^{-1}) \text{, where } Y \in \mathds{S}_{++}^n
 \end{equation*}
@@ -82,9 +82,10 @@ $f_i(X) = a_i^TXa_i - 1$, $f(X) = (f_1, ..., f_m)$.
     \text{s. t. } \lambda \succcurlyeq 0
 \end{equation*}
 
-\item Strong duality holds, because Slater's conditions are performed, it menas that $\exists X \in \mathds{S}_{++}^n$ such that $a_i^TXa_i < 1$, $i \in \overline{1, m}$
+\item Strong duality holds because Slater's conditions are performed, it means that $\exists X \in \mathds{S}_{++}^n$ such that $a_i^TXa_i < 1$, $i \in \overline{1, m}$. For example $X = diag(\frac{1}{10 a_i^Ta_i}, ..., \frac{1}{2a_i^Ta_i})$
 
 \item Let's solve it! From fully symmetric problem and many iterations, when I am trying to solve this problem, I get that $\lambda $ will be like that $\lambda = (\alpha, \alpha, ..., \alpha)$.
+
 
 Okay, it's feasible to our budget set, let's put in our function.
 
@@ -193,33 +194,36 @@ Analytic centering. Derive a dual problem for
     \text{with domain } \{x | a_i^T x < b_i, i \in \overline{1, m} \}
 \end{equation*}
 
-First introduce new variables $y_i$ and equality constraints $y_i = b_i - a_i^Tx$. (The solution of this problem is called the analytic center of the linear inequalities $a_i^Tx \leq b_i$, $i \in \overline{1, m}$. Analytic centers have geometric applications, and play an important role in berrier methods).
+First introduce new variables $Z_i$ and equality constraints $Z_i = b_i - a_i^Tx$. (The solution of this problem is called the analytic center of the linear inequalities $a_i^Tx \leq b_i$, $i \in \overline{1, m}$. Analytic centers have geometric applications, and play an important role in berrier methods).
 
 \underline{\textbf{Solution:}}
-Let's take $y_i = b - a_i^Tx$.
+Let's take $Z_i = b_i - a_i^Tx$.
 \begin{equation*}
-    L(x, y, \nu) = - \log \sum\limits_{i=1}^m \log y_i + \sum\limits_{i=1}^m\nu_i(y_i - b_i + a_i^Tx)
+    L(x, Z, \lambda) = - \sum\limits_{i=1}^m \log Z_i + \sum\limits_{i=1}^m\lambda_i(Z_i - b_i + a_i^Tx)
 \end{equation*}
 
 The dual function will be:
 \begin{equation*}
-    g(\nu) = \inf_{x, y \in domain} ( - \sum\limits_{i=1}^m \log y_i + \sum\limits_{i=1}^m\nu_i(y_i + a_i^Tx)) + \nu^Tb
+    g(\lambda) = \inf_{x, Z \in domain} ( - \sum\limits_{i=1}^m \log Z_i + \sum\limits_{i=1}^m\lambda_i(Z_i + a_i^Tx)) + \lambda^Tb
 \end{equation*}
 
-If $\sum\limits_{i=1}^m \nu_i a_i^T = \nu^TA = 0$ it's not true, than it will unbounded bellow. If $\nu \not \succ 0$ it will be also unbounded below. Let's write our function, the optimal is $y_i = \frac{1}{\nu_i}$.
+If $\sum\limits_{i=1}^m \lambda_i a_i^T = \lambda^TA = 0$ it's not true, than it will unbounded bellow. If $\lambda \not \succ 0$ it will be also unbounded below. Let's write our function, the optimal is $Z_i = \frac{1}{\lambda_i}$.
 
 \begin{equation*}
     g (\nu) = \begin{cases}
-        \sum\limits_{i=1}^m \log \nu_i + m - \nu^Tb \text{, } \nu^TA = 0\text{, } \nu \succ 0 \\
+        \sum\limits_{i=1}^m \log \lambda_i + m - \lambda^Tb \text{, } \lambda^TA = 0\text{, } \lambda \succ 0 \\
         -\infty \text{, otherwise}
     \end{cases}
 \end{equation*}
 
 Dual problem will be:
 \begin{equation*}
- \sum\limits_{i=1}^m \log \nu_i + m -\nu^T b \rightarrow \max_{\nu \in \mathds{R}^m}
+ \sum\limits_{i=1}^m \log \lambda_i + m -\lambda^T b \rightarrow \max_{\lambda \in \mathds{R}^m}
 \end{equation*}
 
 \begin{equation*}
-    \text{s.t. } \nu^TA = 0
+    \begin{gathered}
+    \text{s.t. } \lambda^TA = 0 \\
+    \lambda \succ 0
+    \end{gathered}
 \end{equation*}

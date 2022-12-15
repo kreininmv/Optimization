@@ -9,7 +9,7 @@ Consider the problem of projection some point $y \in \mathds{R}^n, y \not \in \D
    \text{s.t. } \mathds{1}^Tx = 1, x \succeq 0
 \end{equation*}
 
-\underline{\textbf{Solution:}} there is no solution.
+\underline{\textbf{Solution:}} there is no analytical solution. I had no time for do it. But I think that problem is $O(n^3)$.
 
 \subsection{Problem №2}
 Give an explicit solution of the following LP.
@@ -23,11 +23,12 @@ Give an explicit solution of the following LP.
 
 \underline{\textbf{Solution:}}
 
-Secondly, we can write: $L(x, \lambda) = c^Tx + \lambda(Ax-b)$, then 
+Secondly, we can write: $L(x, \nu) = c^Tx + \nu(Ax-b)$, then write KKT conditions:
 \begin{equation*}
     \begin{cases}
     \nabla_x L = c + A^T\lambda = 0 \\
-    \nabla_{\lambda} L = Ax - b =0    
+    \nabla_{\nu} L = Ax - b =0   \\
+    \nu \succeq 0 
     \end{cases}
 \end{equation*}
 
@@ -35,8 +36,8 @@ Secondly, we can write: $L(x, \lambda) = c^Tx + \lambda(Ax-b)$, then
 It's convex optimization problem all functions are affine. 
 
 \begin{enumerate}
-    \item Firstly, if there is no solution for $Ax = b$, then budget set is empty and $p^* = +\infty$.
-    \item Secondly, if there is solution for $Ax = b$, then $x^* = A^{\dag}b$ and $p^* = c^TA^{\dag}b$
+    \item Firstly, if there is no solution to $Ax = b$, then budget set is empty and $p^* = +\infty$.
+    \item Secondly, if there is solution to $Ax = b$, then $x^* = A^{\dag}b$ and $p^* = c^TA^{\dag}b$
 \end{enumerate}
 
 \underline{\textbf{Answer:}}
@@ -61,11 +62,28 @@ Give an explicit solution of the following LP.
 This problem can be considered as a simplest portfolio optimization problem.
 
 \underline{\textbf{Solution:}}
-Okay, let's sort our vector c like that: $c_1 <= c_2 <= ... <= c_n$. It's clear that $c_1 \cdot (\mathds{1}^Tx) <= c^tx$, for all x which satisfy for conditions. 
+Lagrangian:
+\begin{equation*}
+    L(x, \nu, \lambda) = c^Tx + \nu(\mathds{1}^Tx - 1) - \lambda^Tx
+\end{equation*}
+Let's write KKT conditions:
+\begin{equation*}
+    \begin{cases}
+    \nabla_x L = c + \nu \mathds{1} - \lambda = 0 \\
+    \nabla_{\nu} L = \mathds{1}^Tx - 1 =0   \\
+    \lambda \succeq 0 \\
+    \lambda_k x_k = 0, k \in \overline{1, n} \\
+    x \succeq 0 
+    
+    \end{cases}
+\end{equation*}
 
-And we easily get: $p^* = c_1$. It's funny that we need to invest all our money in only one asset, but it's clearlry true if we know and sure in all outcomes.
 
-\underline{\textbf{Answer:}} $p^* = c_1$. If there some components of like: $c_1 = c_2 = ... = c_l$ we take, we can take x as $x = (\frac{1}{l}, ..., \frac{1}{l}, 0, ..., 0)$, for $c_i = 0$, $i \in \overline{l+1, n}$
+Okay, we can find minimal component of c ($c_k)$. It's clear that such component exists. And if we take $(\mathds{1}^Tx)c_k \leq c^Tx$ , for all x which satisfy for conditions. 
+
+And we easily get: $p^* = c_k$. It's funny that we need to invest all our money in only one asset, but it's clearly true if we know and sure in all outcomes. Such $\lambda$ and $\nu$ exist that satisfy KKT, $\nu^* = - c_k$, $\lambda_i^* = c_i - c_k, i \in \overline{1, n}$
+
+\underline{\textbf{Answer:}} $p^* = c_k$, $x^* = (0, ..., 1, ...0)$ 
 
 \subsection{Problem №4}
 Give an explicit solution of the following LP.
@@ -77,24 +95,47 @@ Give an explicit solution of the following LP.
 \begin{equation*}
    \text{s.t. } \mathds{1}^Tx = \alpha, 0 \preccurlyeq x \preccurlyeq 1
 \end{equation*}
-where $\alpha$ is an integer between 0 and n. What happens if $\alpha$ is not an integer (but satisfies $0 \leq 0 \alpha \leq n)$? What if we change the equality to an inequality $\mathds{1}^Tx \leq \alpha$?
+where $\alpha$ is an integer between 0 and n. What happens if $\alpha$ is not an integer (but satisfies $0 \leq  \alpha \leq n)$? What if we change the equality to an inequality $\mathds{1}^Tx \leq \alpha$?
 
 \underline{\textbf{Solution:}}
-If $\alpha$ is integer, then like in previous task we consider that c is like: $c_1 \leq c_2 \leq ... \leq c_n$. If this is not the case, then sort it.
-We take first $\alpha$ components of c: $c_1, ..., c_{\alpha}$ and $x_i = 1$, $i \in \overline{1, \alpha}$, $x_k = 0$, $k \in \overline{\alpha + 1, n}$. $p^* = \sum\limits_{i=1}^\alpha c_i$.
+Lagrangian:
+\begin{equation*}
+    L(x, \nu, \lambda_1, \lambda_2) = c^Tx + \nu(\mathds{1}^Tx - \alpha) + \lambda_1^T(x - \mathds{1}) + \lambda_2^T(-x)
+\end{equation*}
+KKT conditions:
+\begin{equation*}
+    \begin{cases}
+    \nabla_x L = c + \nu \mathds{1} + \lambda_1 - \lambda_2 = 0 \\
+    \nabla_{\nu} L = \mathds{1}^Tx - 1 =0   \\
+    \lambda_1 \succeq 0 \\
+    \lambda_2 \succeq 0 \\
+    \lambda_{1_k} (x_k - 1) = 0, k \in \overline{1, n} \\
+    \lambda_{2_k} x_k = 0, k \in \overline{1, n} \\
+    1 \succeq x \succeq 0
+    \end{cases}
+\end{equation*}
+KKT conditions will be necessary and sufficient because Slater's condition is met.
+
+If $\alpha$ is integer, then we consider without begging for generality without begging for generality (from previous task) $k = 0$, and the smallest components come first. 
+
+We take first $\alpha$ components of c: $c_1, ..., c_{\alpha}$ and $x_i = 1$, $i \in \overline{1, \alpha}$, $x_k = 0$, $k \in \overline{\alpha + 1, n}$. $p^* = \sum\limits_{i=1}^\alpha c_i$. 
+
+$\nu^* = -c_{\alpha}$; $\lambda_{1_i}^* = 0, i \in \overline{1, \alpha}$; $\lambda_{1_i} = -(c_i + c_{\alpha}), i \in \overline{\alpha + 1, n}$;
+$\lambda_{2_i}^* = 0, i \in \overline{1, \alpha}$; $\lambda_{2_i}^* = c_i - c_{\alpha}, i \in \overline{\alpha +1, n}$; for such 
+$\nu^*, \lambda_1^*, \lambda_2^*$ all kkt is right.
 
 If $\alpha$ is not integer, then we take like first $\lfloor \alpha \rfloor$ elements and difference between $\alpha$ and $\lfloor \alpha \rfloor$. 
 
-$x_i = 1$, $i \in \overline{1, \lfloor \alpha \rfloor}$, $x_{\lfloor \alpha \rfloor + 1} = \alpha - \lfloor \alpha \rfloor$, $x_{k}$, $k \in \overline{\lfloor \alpha \rfloor + 2, n}$. $p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor}c_i + (\alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor + 1}$.
+$x_i = 1$, $i \in \overline{1, \lfloor \alpha \rfloor - 1}$, $x_{\lfloor \alpha \rfloor } = 1 + \alpha - \lfloor \alpha \rfloor$, $x_{k}$ = 0, $k \in \overline{\lfloor \alpha \rfloor + 1, n}$. $p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor - 1}c_i + (1 + \alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor }$. $\nu^*, \lambda_1^*, \lambda_2^*$ we take from previos task.
 
-If $\mathds{1}^Tx \leq \alpha$, then we can take first $k \leq \alpha$ elements in c such that $c_i < 0$, $i \in \overline{1, k}$, $0 \leq c_{k+1}$. And $p^* = \sum\limits_{i=1}^kc_i$
+If $\mathds{1}^Tx \leq \alpha$, then we can take first $k \leq \alpha$ elements in c such that $c_i < 0$, $i \in \overline{1, k}$, $0 \leq c_{k+1}$. And $p^* = \sum\limits_{i=1}^kc_i$. If all components are positive then we tak $x^* = 0$. $k \geq \alpha$ we take first alpha components if they are negative. And $x_i^* = 1, i \in \overline{1, k}$; $x_i^* = 0, i \in \overline{k+1, n}$
 
-\underline{\textbf{Answer:}} $x^*$ are described above.
+\underline{\textbf{Answer:}} $x^*, \nu^*, \lambda_1^*, \lambda_2^*$ are described above.
 \begin{equation*}
     \begin{cases}
-    p^* = \sum\limits_{i=1}^\alpha c_i, \alpha \text{ is integer} \\
-    p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor}c_i + (\alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor + 1}, \alpha \text{ is not integer}  \\
-    p^* = \sum\limits_{i=1}^kc_i \text{ ,} \mathds{1}^T x \leq \alpha \text{, the conditions for k are given above}
+    p^* = \sum\limits_{i=1}^\alpha c_i, \alpha \text{ is an integer} \\
+    p^* = \sum\limits_{i=1}^{\lfloor \alpha \rfloor}c_i + (\alpha - \lfloor \alpha \rfloor) \cdot c_{\lfloor \alpha \rfloor + 1}, \alpha \text{ is not an integer}  \\
+    p^* = \sum\limits_{i=1}^kc_i \text{ ,} \mathds{1}^T x \leq \alpha \text{, the conditions for k are given above (if negatives components exists}, 
     \end{cases}
 \end{equation*}
 
@@ -112,46 +153,50 @@ Give an explicit solution of the following QP.
 where $A \in \mathds{S}_{++}^n, c \not = 0$. What is the solution if the problem is not convex ($A \not \in \mathds{S}_{++}^n)$. (Hint: consider eigendecomposition of the matrix: $A = Q diag(\lambda)Q^T = \sum\limits_{i=1}^n \lambda_i q_i q_i^T$ and different cases of $\lambda > 0, \lambda = 0, \lambda < 0)$?
 
 \underline{\textbf{Solution:}}
-Okay, from course of linear algebra we can represent $A = A^{\frac{1}{2}}A^{\frac{1}{2}}$ (it's simple fact from first homework), then we take $y = A^{\frac{1}{2}}x$, then we can rewrite our problem as:
+Lagrangian: 
+\begin{equation*}
+    L(x, \lambda) = c^Tx + \lambda (x^TAx - 1)
+\end{equation*}
+KKT conditions:
+\begin{equation*}
+    \begin{cases}
+    \nabla_x L = c + (A+A^T)x = c + 2\lambda Ax = 0\\
+    \lambda \geq 0 \\
+    \lambda (x^TAx - 1) = 0\\
+    x^TAx \leq 1
+    \end{cases}
+\end{equation*}
+
+KKT conditions will be necessary and sufficient, because our problem is convex and Slater's conditions are met. It's right, we can take x such as first component will be equals one divide on ten multiply sum of components of first line of matrix A, and others components of x will be equal zero. From that we get that for such x: $x^TAx = \frac{1}{10} < 1$. And Slater's conditions are met.
 
 \begin{equation*}
-    c^TA^{-\frac{1}{2}}y  \xrightarrow{} \min\limits_{y \in \mathds{R}^n}
+    x = -\frac{A^{-1}c}{2\lambda}
 \end{equation*}
 
 \begin{equation*}
-   \text{s.t. } y^Ty \leq 1
-\end{equation*}
-
-Oh, wow, we need to minimize our linear function on unit ball..., then:
-\begin{equation*}
-y^* = - \frac{A^{-\frac{1}{2}}c}{||A^{-\frac{1}{2}}c||_2}\text{, } x^* = - \frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}
-\end{equation*}
-Then optimal value will be:
-\begin{equation*}
-    p^* = -\frac{c^TA^{-\frac{1}{2}}A^{-\frac{1}{2}}c}{||A^{-\frac{1}{2}}c||_2} = - \sqrt{c^TA^{-1}c}
-\end{equation*}
-
-If $A \not \in \mathds{S}_{++}^n$.
-We represent $A = Q diag(\lambda)Q^T = \sum\limits_{i=1}^n \lambda_i q_i q_i^T$.
-We will take: $x = Q^{-T}y$, then we will rewrite our problem.
-
-\begin{equation*}
-    (Q^Tc)^Ty   \xrightarrow{} \min\limits_{y \in \mathds{R}^n}
+    \lambda(\frac{c^TA^{-1}c}{4\lambda^2} - 1) = 0
 \end{equation*}
 
 \begin{equation*}
-   \text{s.t. } \sum\limits_{i=1}^n y_i^2 \lambda_i \leq 1
+    \lambda = \sqrt{\frac{c^TA^{-1}c}{4}}
 \end{equation*}
+And $x^*$ will be:
+
+\begin{equation*}
+    x^* = - \frac{A^{-1}c}{\sqrt{c^TA^{-1}c}}
+\end{equation*}
+
+And optimal value will be: $p^* = - \sqrt{c^TA{-1}c}$
+
+If matrix is not positive symmertrical.
 
 If $\lambda_k > 0$, $i \in \overline{1, n}$, then it's the same task.
 
-If $\lambda_k < 0$, then we can take $y_k \xrightarrow{} \pm \infty$, and minimum will be $-\infty$.
-
-If $\lambda_k = 0$, and $(Q^Tc)_k \not = 0$, then minimum will be $-\infty$.
+If $\lambda_k \leq 0$, then we can take $y_k \xrightarrow{} \pm \infty$, and minimum will be $-\infty$.
 
 If $\lambda_k = 0$, if $b_k = 0$ for all k such $\lambda_k = 0$, then it's the same task, but with less $\lambda_l > 0$.
 
-\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c}$, $x^* = - \frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}$
+\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c}$, $x^* = $
 
 \subsection{Problem №6}
 Give an explicit solution of the following QP.
@@ -166,17 +211,17 @@ Give an explicit solution of the following QP.
 where $A \in \mathds{S}_{++}^n, c \not = 0, x_c$
 
 \underline{\textbf{Solution:}}
-We will take $y = (x-x_c)$, and write answer, because we solved problem №5.
+We will take $y = (x-x_c)$, and write answer, because we can rewrite it as the fifth problem we solved.
 
 \begin{equation*}
-y^* = -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}\text{, } x^* = x_c -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}
+y^* = - \frac{A^{-1}c}{\sqrt{c^TA^{-1}c}}\text{, } x^* = x_c - \frac{A^{-1}c}{\sqrt{c^TA^{-1}c}}
 \end{equation*}
 
 \begin{equation*}
     p^* = - \sqrt{c^TA^{-1}c} + c^Tx_c
 \end{equation*} 
 
-\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c} + c^Tx_c$, $x^* = x_c -\frac{A^{-1}c}{||A^{-\frac{1}{2}} c ||_2}$
+\underline{\textbf{Answer:}} $p^* = - \sqrt{c^TA^{-1}c} + c^Tx_c$, $x^* = x_c - \frac{A^{-1}c}{\sqrt{c^TA^{-1}c}}$
 
 \subsection{Problem №7}
 Give an explicit solution of the following QP.
@@ -213,45 +258,45 @@ where $A \in \mathds{R}^{m \dot n}$ with
 \underline{\textbf{Solution:}}
 If system $Cx = d$ has no solutions, then $p^* = +\infty$
 
-If system $Cx = d$ has solutions, then by Slater's conditions we have internal point:
+If system $Cx = d$ has solutions, then by Slater's conditions we have an internal point:
 
 \begin{equation*}
-    L(x, \lambda) = \langle Ax - b, Ax -b \rangle + \lambda^T(Cx-d)
+    L(x, \nu) = \langle Ax - b, Ax -b \rangle + \nu^T(Cx-d)
 \end{equation*}
 
 \begin{equation*}
     \begin{cases}
-    \nabla_x L = 2A^T(Ax-b) + \lambda^TC = 0 \\ 
-    \nabla_{\lambda} L = Cx - d= 0
+    \nabla_x L = 2A^T(Ax-b) + \nu^TC = 0 \\ 
+    \nabla_{\nu} L = Cx - d= 0
     \end{cases}
 \end{equation*}
 
 \begin{equation*}
     \begin{cases}
-    x = (A^TA)^{\dag}(A^Tb - \frac{1}{2}\lambda^TC) \\
+    x = (A^TA)^{\dag}(A^Tb - \frac{1}{2}\nu^TC) \\
     x = C^{\dag}d
     \end{cases}
 \end{equation*}
 Then we get: 
 
 \begin{equation*}
-(A^TA)^{\dag}(A^Tb - \frac{1}{2}\lambda^TC) = C^{\dag}b
+(A^TA)^{\dag}(A^Tb - \frac{1}{2}\nu^TC) = C^{\dag}d
 \end{equation*}
 
 \begin{equation*}
-    A^Tb - \frac{1}{2}\lambda^TC = (A^TA)^{\dag})^{\dag} (C^{\dag}b) = (A^TA)(C^{\dag}b)
+    A^Tb - \frac{1}{2}\nu^TC = (A^TA)^{\dag})^{\dag} (C^{\dag}d) = (A^TA)(C^{\dag}d)
 \end{equation*}
-Then we get $\lambda^*$
+Then we get $\nu^*$
 \begin{equation*}
-    \lambda^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}b)C^{\dag})^T
+    \nu^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}d)C^{\dag})^T
 \end{equation*}
 
 \underline{\textbf{Answer:}}
 
 \begin{equation*}
     \begin{cases}
-        \text{if system } Cx = d \text{ has no solutions ,} p^* = +\infty \\
-        x^* = C^{\dag}d, \lambda^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}b)C^{\dag})^T \text{, otherwise} \\
+        p^* = +\infty \text{, if system } Cx = d \text{ has no solutions}  \\
+        x^* = C^{\dag}d, \nu^* = 2(A^TbC^{\dag} - (A^TA)(C^{\dag}b)C^{\dag})^T \text{, otherwise} \\
     \end{cases}
 \end{equation*}
 
@@ -273,14 +318,14 @@ Derive the KKT conditions for the problem
 \underline{\textbf{Solution:}}
 Let's write Lagrangian:
 \begin{equation*}
-    L(x, \lambda) = trX  - \log (detX) + \lambda^T(Xs - y)
+    L(x, \nu) = trX  - \log (detX) + \nu^T(Xs - y)
 \end{equation*}
 It can be seen that Slaters conditions are met: problem is convex and all functions in conditions are affine.
 
 \begin{equation*}
     \begin{cases}
-        \nabla_x L = I - X^{-1} + \lambda s^T = 0 \text{ } | \text{ }  \cdot y \\ 
-        \nabla_{\lambda} L = Xs - y = 0
+        \nabla_x L = I - X^{-1} + \nu s^T = 0 \text{ } | \text{ on right }  \cdot y \\ 
+        \nabla_{\nu} L = Xs - y = 0
     \end{cases}
 \end{equation*}
 
@@ -290,27 +335,52 @@ $X^* = I + yy^T - \frac{1}{s^Ts}ss^T$:
     X^*s - y = Is + yy^Ts - \frac{1}{s^Ts}ss^Ts - y = s + y - s - y = 0
 \end{equation*}
 
-Wohoo, it's feasible for KKT! Let's find lambda for that point:
+Wohoo, it's feasible for KKT! Let's find nu for that point:
 \begin{equation*}
 \begin{cases}
-    y - X^{-1}y + \frac{1}{2}(\lambda s^T + s \lambda^T) y = 0 \\
+    y - X^{-1}y + \nu s^T y = 0 \\
     s = X^{-1}y 
     \end{cases}
 \end{equation*}
 
 \begin{equation*}
     \begin{cases}
-    y - s + \frac{1}{2} (\lambda + s \lambda^T y ) = 0 \text{ } | \text{ } \cdot y^T \\
-    y^Ty - y^Ts + \frac{1}{2} ( y^T \lambda + y^T s \lambda^T y ) = y^Ty - 1 + \lambda^Ty = 0 \text{ } | \text{ transpose}
+    y - s + \nu s^T y = 0 \text{ } | \text{ on left } \cdot y^T \\
+    y^Ty - y^Ts + y^T \nu s^T y = y^Ty - 1 + y^T \nu = 0 | \text{ transpose}
     \end{cases}
 \end{equation*}
 
 \begin{equation*}
     \begin{cases}
-        \lambda y^T = 1 - y^Ty \text{ } | \text{ } \cdot s \\
-        \lambda = s - y^Tys
+        \nu y^T  = 1 - y^Ty \text{ } | \text{on right } \cdot s \\
+        \nu = s - y^Tys
     \end{cases}
 \end{equation*}
+
+We can find $X^{-1}$ from first condition of KKT:
+\begin{equation*}
+    X^{-1} = I +(s-y^Tys)s^T = I + ss^T - y^Ty ss^T
+\end{equation*}
+Let's check $X^*X^{-1} = I$
+\begin{equation*}
+\begin{gathered}
+    (I + yy^T - \frac{ss^T}{s^Ts})(I + ss^T - y^Ty ss^T) = 
+    I + ss^T - y^Ty ss^T +
+    + yy^T  +yy^T ss^T - yy^T y^Ty ss^T  \\
+    - \frac{ss^T}{s^Ts} - \frac{ss^Tss^T}{s^Ts} + \frac{ss^T}{ss^T} y^Ty ss^T = I
+\end{gathered}
+\end{equation*}
+Check, that X lie in $\mathds{S}_{++}^n$ is very easy: $I + yy^T - \frac{1}{s^Ts}ss^T$ is positive and symmetric matrix. I want to say that is easy you need to look at matrix and understand, that $I - \frac{1}{s^Ts}ss^T$ is symmetric and 
+positive and $yy^T$ is also positive and symmetric, but some will people can not understand that. Okay, let's do it by definition:
+
+\begin{equation*}
+    x^T(I + yy^T - \frac{1}{s^Ts}ss^T)x = (x^T + x^Tyy^T - \frac{x^T}{s^Ts}ss^T)x = ...
+\end{equation*}
+
+\begin{equation*}
+    ... = x^Tx + (y^Tx)^T(y^Tx) - \frac{1}{s^Ts} (s^Tx)^T(s^Tx) = \langle x, x \rangle + \langle y, x \rangle^2 - \frac{\langle s, x\rangle^2}{s^Ts} \geq 0
+\end{equation*}
+It's right because length of projection on unit vector is less then length of vector in space.
 
 \subsection{Problem №10}
 Supporting hyperplane interpretation of KKT conditions. Consider a convex problem with no equality constraints
@@ -340,11 +410,11 @@ Show that:
 for all feasible x. In other words the KKT conditions imply the simple optimality criterion or $\nabla f_0(x^*)$ defines a supporting hypperplane to the feasible set at $x^*$. 
 
 \underline{\textbf{Solution:}}
-We all know that for convex functions is right that criterion for feasible $x^*$:
+We all know that for convex functions it is right that a criterion for feasible $x^*$:
 \begin{equation*}
-    f_i(x) \geq f_i(x^*) + \nabla f_i(x^*)^T(x-x^*) 
+    f_i(x) - f_i(x^*) \geq \nabla f_i(x^*)^T(x-x^*) 
 \end{equation*}
-Let's multiply it on $\mu_i^*$ and sum by i:
+Let's multiply it by $\mu_i^*$ and sum over i:
 \begin{equation*}
     \sum\limits_{i=1}^{m}f_i(x)\mu_i^* \geq \sum\limits_{i=1}^m f_i(x^*)\mu_i^* + \sum\limits_{i=1}^n \mu_i^* \nabla f_i(x^*)^T(x-x^*)
 \end{equation*}
